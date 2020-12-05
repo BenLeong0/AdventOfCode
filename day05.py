@@ -20,7 +20,7 @@ def decodeColumn(x):
 def getId(x):
     return int(x.replace('F','0').replace('B','1').replace('L','0').replace('R','1'), 2)
 
-
+g
 maxId = 0
 minId = inf
 
@@ -41,6 +41,8 @@ for id in ids:
         print(i)
         break
     i += 1
+
+
 
 
 print(maxId)
