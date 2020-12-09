@@ -2,7 +2,7 @@ values = []
 sums = []
 n = 25
 
-with open('day09input', 'r') as f:
+with open('inputs/day09input', 'r') as f:
     while True:
         line = f.readline()
         if not line:

@@ -5,7 +5,7 @@ letters = [];
 passwords = [];
 
 
-with open('day02input', 'r') as f:
+with open('inputs/day02input', 'r') as f:
     for line in f:
         inputs.append(line[:-1].split(' '));
 

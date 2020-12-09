@@ -2,7 +2,7 @@ from math import inf
 
 seats = []
 
-with open('day05input', 'r') as f:
+with open('inputs/day05input', 'r') as f:
     while True:
         line = f.readline()
         if not line:
@@ -20,7 +20,7 @@ def decodeColumn(x):
 def getId(x):
     return int(x.replace('F','0').replace('B','1').replace('L','0').replace('R','1'), 2)
 
-g
+
 maxId = 0
 minId = inf
 

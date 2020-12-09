@@ -1,6 +1,6 @@
 expenses = [];
 
-with open('day01input', 'r') as f:
+with open('inputs/day01input', 'r') as f:
     for line in f:
         expenses.append(int(line[:-1]))
 
