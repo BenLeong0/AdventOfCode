@@ -25,7 +25,7 @@ def partOne():
         elif x[0] in ['L','R']:
             dir = cards[(cards.index(dir) + (-1)**(x[0]!='R')*int(x[1]/90)) % 4]
     print('Part 1 position:', pos)
-    print('Distance:', abs(pos[0]) + abs(pos[1]))
+    print('Distance:', abs(pos[0]) + abs(pos[1]), '\n')
 
 
 def partTwo():
@@ -40,9 +40,8 @@ def partTwo():
             for _ in range(((-1)**(x[0]!='R')*int(x[1]/90)) % 4):
                 wpos = [wpos[1], -wpos[0]]
     print('Part 2 position:', pos)
-    print('Distance:', abs(pos[0]) + abs(pos[1]))
+    print('Distance:', abs(pos[0]) + abs(pos[1]), '\n')
 
 
 partOne()
-print()
 partTwo()
