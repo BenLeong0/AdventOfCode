@@ -3,12 +3,11 @@ sums = []
 n = 25
 
 with open('inputs/day09input', 'r') as f:
-    while True:
-        line = f.readline()
-        if not line:
-            break
+    line = f.readline()
+    while line:
         line = line[:-1]
         values.append(int(line))
+        line = f.readline()
 
 for i in range(n-1):
     sumList = []
