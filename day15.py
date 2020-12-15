@@ -1,20 +1,24 @@
+from datetime import datetime
 
 start = [19,20,14,0,9,1]
 
 
 def f(n, start=start):
+    startTime = datetime.now()
     mem = {val:i+1 for (i,val) in enumerate(start[:-1])}
     prev = start[-1]
-    i = len(start)
 
-    while i < n:
+    for i in range(len(start), n):
         if prev not in mem:
             mem[prev], prev = i, 0
         else:
             mem[prev], prev = i, i-mem[prev]
-        i+=1
 
-    return print('Input:', start, '\n{}th number:'.format(n), prev)
+
+    print('Input:', start)
+    print('{}th number:'.format(n), prev)
+    print('Time taken:', (datetime.now() - startTime).total_seconds(), 'seconds')
+    return
 
 
 def partOne():
