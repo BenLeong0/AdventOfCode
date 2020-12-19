@@ -53,20 +53,21 @@ def partOne():
             count += 1
     return print(count)
 
-def partTwo():
+def partTwo(limit=8):
+    print('Limit:', limit)
+    # limit chosen by trial and error after finding correct answer
     count = 0
     for message in messages:
         # print(message)
         newRules = rules.copy()
         options = newRules['0']
         s = options[0]
-        # 11 is an arbitrary limit that happened to be large enough phew
-        while len(options) < 11:
+        while len(options) < limit:
             s = s.replace('8', '42 8')
             options.append(s)
-        for i in range(11):
+        for i in range(limit):
             s = options[i]
-            while len(s.split(' ')) < 11:
+            while len(s.split(' ')) < limit:
                 s = s.replace('11', '42 11 31')
                 options.append(s)
         newRules['0'] = options
