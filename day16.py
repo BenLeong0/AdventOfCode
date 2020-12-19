@@ -73,7 +73,8 @@ def partTwo():
         for rule in rules.items():
             if ruleCheck([ticket[i] for ticket in validTickets], rule):
                 edgelist.append((rule[0], i))
-
+    # print(edgelist.sort(key = lambda x : x[0]))
+    print(edgelist)
     G = nx.Graph(edgelist)
     nodes = list(G.nodes)
     matching = []
