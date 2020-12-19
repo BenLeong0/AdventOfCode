@@ -55,9 +55,9 @@ def partOne():
             count += 1
     return print(count)
 
-def partTwo(limit=8):
-    limit = 0
+def partTwo():
     # Not sure if this is good method for finding limit lol
+    limit = 0
     for message in messages:
         limit = max(limit, int(log(len(message),2))+2)
     print('Limit:', limit)
