@@ -1,3 +1,5 @@
+from math import log
+
 rules = {}
 ruleSizes = {}
 messages = []
@@ -54,23 +56,27 @@ def partOne():
     return print(count)
 
 def partTwo(limit=8):
+    limit = 0
+    # Not sure if this is good method for finding limit lol
+    for message in messages:
+        limit = max(limit, int(log(len(message),2))+2)
     print('Limit:', limit)
-    # limit chosen by trial and error after finding correct answer
+
+    newRules = rules.copy()
+    options = newRules['0']
+    s = options[0]
+    while len(options) < limit:
+        s = s.replace('8', '42 8')
+        options.append(s)
+    for i in range(limit):
+        s = options[i]
+        while len(s.split(' ')) < limit:
+            s = s.replace('11', '42 11 31')
+            options.append(s)
+    newRules['0'] = options
+
     count = 0
     for message in messages:
-        # print(message)
-        newRules = rules.copy()
-        options = newRules['0']
-        s = options[0]
-        while len(options) < limit:
-            s = s.replace('8', '42 8')
-            options.append(s)
-        for i in range(limit):
-            s = options[i]
-            while len(s.split(' ')) < limit:
-                s = s.replace('11', '42 11 31')
-                options.append(s)
-        newRules['0'] = options
         if f(message, rules=newRules)[0]:
             count += 1
     return print(count)
