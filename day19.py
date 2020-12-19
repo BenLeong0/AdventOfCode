@@ -18,10 +18,6 @@ with open("inputs/day19input", 'r') as f:
         messages.append(line[:-1])
         line = f.readline()
 
-# print(rules)
-
-# input:  ababbb
-# output: boolean
 
 def f(s, rule='0', rules=rules):
     options = rules[rule]
@@ -48,12 +44,14 @@ def f(s, rule='0', rules=rules):
                 return (True, curr)
     return (False, s)
 
+
 def partOne():
     count = 0
     for message in messages:
         if f(message)[0]:
             count += 1
     return print(count)
+
 
 def partTwo():
     # Not sure if this is good method for finding limit lol
