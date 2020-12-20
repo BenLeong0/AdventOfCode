@@ -3,7 +3,7 @@ from copy import deepcopy
 accumulator = 0
 instructions = []
 
-with open('inputs/day08input', 'r') as f:
+with open('day08.in', 'r') as f:
     while True:
         line = f.readline()
         if not line:

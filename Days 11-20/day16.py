@@ -1,6 +1,6 @@
 import networkx as nx
 
-with open('inputs/day16input', 'r') as f:
+with open('day16.in', 'r') as f:
     line = f.readline()
     status = 'rules'
     rules = {}

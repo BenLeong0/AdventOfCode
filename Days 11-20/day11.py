@@ -1,6 +1,6 @@
 seats = []
 
-with open('inputs/day11input', 'r') as f:
+with open('day11.in', 'r') as f:
     while True:
         line = f.readline()
         if not line:

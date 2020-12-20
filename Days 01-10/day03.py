@@ -5,7 +5,7 @@ count71 = 0
 count12 = 0
 i = 0
 
-with open('inputs/day03input', 'r') as f:
+with open('day03.in', 'r') as f:
     while True:
         line = f.readline()[:-1]
         if not line:

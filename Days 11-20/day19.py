@@ -4,7 +4,7 @@ rules = {}
 ruleSizes = {}
 messages = []
 
-with open("inputs/day19input", 'r') as f:
+with open("day19.in", 'r') as f:
     line = f.readline()
     while line != '\n':
         line = line[:-1].split(': ')

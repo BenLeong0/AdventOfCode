@@ -1,6 +1,6 @@
 def partOne():
     mem = {}
-    with open('inputs/day14input', 'r') as f:
+    with open('day14.in', 'r') as f:
         line = f.readline()[:-1]
         while line:
             if line.split(' ')[0] == 'mask':
@@ -22,7 +22,7 @@ def partOne():
 
 def partTwo():
     mem = {}
-    with open('inputs/day14input', 'r') as f:
+    with open('day14.in', 'r') as f:
         line = f.readline()[:-1]
         while line:
             if line.split(' ')[0] == 'mask':

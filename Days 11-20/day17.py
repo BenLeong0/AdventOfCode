@@ -1,8 +1,8 @@
 cubes1 = {}
-cubes2 = {} 
+cubes2 = {}
 cycleLimit = 6
 
-with open("inputs/day17input", 'r') as f:
+with open("day17.in", 'r') as f:
 	i = 0
 	line = f.readline()
 	size = len(line) - 1
@@ -27,7 +27,7 @@ def partOne(cubes=cubes1, cycle=1):
 						continue
 					result.append((x+i,y+j,z+k))
 		return result
-	
+
 	# Add new sides
 	for x in range(-cycle-1, size+cycle+1):
 		for y in range(-cycle-1, size+cycle+1):
@@ -35,7 +35,7 @@ def partOne(cubes=cubes1, cycle=1):
 				cube = (x,y,z)
 				if cube not in cubes:
 					cubes[cube] = '.'
-	
+
 	newCubes = {}
 	for x in range(-cycle, size+cycle):
 		for y in range(-cycle, size+cycle):
@@ -52,10 +52,10 @@ def partOne(cubes=cubes1, cycle=1):
 						newCubes[cube] = '#'
 					else:
 						newCubes[cube] = '.'
-					
+
 	if cycle == cycleLimit:
 		return print(list(newCubes.values()).count('#'))
-	
+
 	return partOne(newCubes, cycle+1)
 
 
@@ -71,7 +71,7 @@ def partTwo(cubes=cubes2, cycle=1):
 							continue
 						result.append((x+i,y+j,z+k,w+l))
 		return result
-	
+
 	# Add new sides
 	for x in range(-cycle-1, size+cycle+1):
 		for y in range(-cycle-1, size+cycle+1):
@@ -80,7 +80,7 @@ def partTwo(cubes=cubes2, cycle=1):
 					cube = (x,y,z,w)
 					if cube not in cubes:
 						cubes[cube] = '.'
-	
+
 	newCubes = {}
 	for x in range(-cycle, size+cycle):
 		for y in range(-cycle, size+cycle):
@@ -98,12 +98,12 @@ def partTwo(cubes=cubes2, cycle=1):
 							newCubes[cube] = '#'
 						else:
 							newCubes[cube] = '.'
-					
+
 	if cycle == cycleLimit:
 		return print(list(newCubes.values()).count('#'))
-	
+
 	return partTwo(newCubes, cycle+1)
 
 
 #partOne()
-partTwo()	
+partTwo()
