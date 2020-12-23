@@ -45,6 +45,3 @@ def partTwo():
 
 partOne()
 partTwo()
-
-# partOne()
-# partTwo()
