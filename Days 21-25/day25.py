@@ -24,7 +24,3 @@ card_loop_size = get_loop_size(card_public_key)
 door_loop_size = get_loop_size(door_public_key)
 
 print(get_encryption_key(door_public_key, card_loop_size))
-
-sleep(2)
-
-print('yo')
