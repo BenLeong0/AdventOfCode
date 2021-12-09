@@ -49,15 +49,10 @@ Board = List[List[int]]
 
 
 def completed_board(board: Board, index: int) -> bool:
-    # Rows
-    if all([x == -1 for x in board[index//5]]):
-        return True
-
-    # Columns
-    if all([row[index%5] == -1 for row in board]):
-        return True
-
-    return False
+    return (
+        all([x == -1 for x in board[index//5]]) or      # Rows
+        all([row[index%5] == -1 for row in board])      # Columns
+    )
 
 
 def get_board_score(board: Board, final_num: int) -> int:
