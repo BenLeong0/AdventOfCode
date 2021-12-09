@@ -101,17 +101,15 @@ def find_sum_of_outputs(signals: List[str]) -> int:
                 break
 
         output_signal = signal.split('|')[1].split()
-        print(seen_letters)
 
         curr_sum += (
-            1000 * seen_letters[''.join(sorted(output_signal[0]))] + 
-            100 * seen_letters[''.join(sorted(output_signal[1]))] + 
-            10 * seen_letters[''.join(sorted(output_signal[2]))] + 
+            1000 * seen_letters[''.join(sorted(output_signal[0]))] +
+            100 * seen_letters[''.join(sorted(output_signal[1]))] +
+            10 * seen_letters[''.join(sorted(output_signal[2]))] +
             seen_letters[''.join(sorted(output_signal[3]))]
         )
-    print('yo')
     return curr_sum
 
 assert find_sum_of_outputs(test_input) == 61229
 print(find_sum_of_outputs(full_input))
-                
+
