@@ -28,13 +28,13 @@ def find_number_of_dangerous_spots(coord_pairs: List[Tuple[Tuple[int, int]]]) ->
 
     for coord_pair in coord_pairs:
         if coord_pair[0][0] == coord_pair[1][0]:
-            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1
+            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1  # Go up or down
             curr_spots = [
                 (coord_pair[0][0], coord_pair[0][1] + inc_dir * step)
                 for step in range(abs(coord_pair[0][1] - coord_pair[1][1]) + 1)
             ]
         elif coord_pair[0][1] == coord_pair[1][1]:
-            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1
+            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1  # Go left or right
             curr_spots = [
                 (coord_pair[0][0] + inc_dir * step, coord_pair[0][1])
                 for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
@@ -61,20 +61,20 @@ def find_number_of_dangerous_spots_with_diag(coord_pairs: List[Tuple[Tuple[int, 
 
     for coord_pair in coord_pairs:
         if coord_pair[0][0] == coord_pair[1][0]:
-            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1
+            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1      # Go up or down
             curr_spots = [
                 (coord_pair[0][0], coord_pair[0][1] + inc_dir * step)
                 for step in range(abs(coord_pair[0][1] - coord_pair[1][1]) + 1)
             ]
         elif coord_pair[0][1] == coord_pair[1][1]:
-            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1
+            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1      # Go left or right
             curr_spots = [
                 (coord_pair[0][0] + inc_dir * step, coord_pair[0][1])
                 for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
             ]
         elif abs(coord_pair[0][0] - coord_pair[1][0]) == abs(coord_pair[0][1] - coord_pair[1][1]):
-            x_inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1
-            y_inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1
+            x_inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1    # Go left or right
+            y_inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1    # Go up or down
             curr_spots = [
                 (coord_pair[0][0] + x_inc_dir * step, coord_pair[0][1] + y_inc_dir * step)
                 for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
