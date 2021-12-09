@@ -10,11 +10,11 @@ with open("day7.in", "r", newline="\n") as readfile:
 # Part 1
 def find_min_fuel(starting_positions: List[int]) -> int:
     sorted_positions = sorted(starting_positions)
-    curr_min = float("inf")
-    for pos in range(sorted_positions[-1] + 1):
-        fuel_usage = sum([abs(x-pos) for x in sorted_positions])
-        curr_min = min(curr_min, fuel_usage)
-    return curr_min
+
+    def get_total_fuel_usage(pos: int) -> int:
+        return sum([abs(x-pos) for x in sorted_positions])
+
+    return min([get_total_fuel_usage(pos) for pos in range(sorted_positions[-1] + 1)])
 
 assert find_min_fuel(test_input) == 37
 print(find_min_fuel(full_input))
