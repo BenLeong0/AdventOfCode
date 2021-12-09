@@ -9,18 +9,7 @@ with open("day1.in", "r") as readfile:
 
 # Part 1
 def count_increases(depths: List[int]) -> int:
-    if len(depths) == 0:
-        return 0
-
-    curr_depth = depths[0]
-    count = 0
-
-    for depth in depths[1:]:
-        if depth > curr_depth:
-            count += 1
-        curr_depth = depth
-
-    return count
+    return sum([depths[i]<depths[i+1] for i in range(len(depths)-1)])
 
 assert count_increases(test_input) == 7
 print(count_increases(full_input))
@@ -28,19 +17,7 @@ print(count_increases(full_input))
 
 # Part 2
 def sliding_window_increases(depths: List[int]) -> int:
-    if len(depths) < 3:
-        return 0
-
-    count = 0
-
-    def compare_to_previous_window(index: int) -> bool:
-        return sum(depths[index:index+3]) > sum(depths[index-1:index+2])
-
-    for i in range(1, len(depths) - 2):
-        if compare_to_previous_window(i):
-            count += 1
-
-    return count
+    return sum([sum(depths[i:i+3])<sum(depths[i+1:i+4]) for i in range(len(depths)-2)])
 
 assert sliding_window_increases(test_input) == 5
 print(sliding_window_increases(full_input))
