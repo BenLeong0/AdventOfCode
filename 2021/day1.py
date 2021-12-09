@@ -17,7 +17,7 @@ print(count_increases(full_input))
 
 # Part 2
 def sliding_window_increases(depths: List[int]) -> int:
-    return sum([sum(depths[i:i+3])<sum(depths[i+1:i+4]) for i in range(len(depths)-2)])
+    return sum([sum(depths[i:i+3])<sum(depths[i+1:i+4]) for i in range(len(depths)-3)])
 
 assert sliding_window_increases(test_input) == 5
 print(sliding_window_increases(full_input))
