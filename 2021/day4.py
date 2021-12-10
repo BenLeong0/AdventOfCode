@@ -47,6 +47,8 @@ with open("day4.in", "r", newline="\n") as readfile:
 # Shared
 Board = List[List[int]]
 
+# i//5 == j//5  =>  i and j are in the same row
+# i%5 == j%5  =>  i and j are in the same column
 
 def completed_board(board: Board, index: int) -> bool:
     return (
