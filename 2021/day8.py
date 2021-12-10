@@ -18,18 +18,6 @@ with open("day8.in", "r", newline="\n") as readfile:
     full_input = [x[:-1] for x in readfile.readlines()]
 
 
-# 2 lines => '1'
-# 3 lines => '7'
-# 4 lines => '4'
-# 7 lines => '8'
-# 6 lines, 2 overlap with '7' => '6'
-# 5 lines, 5 overlap with '6' => '5'
-# 5 lines, 2 overlap with '7' => '2'
-# 5 lines, 3 overlap with '4' => '3'
-# 6 lines, 5 overlap with '5' => '9'
-# 6 lines, 4 overlap with '5' => '0'
-
-
 # Part 1
 def find_num_of_basic_letters(signals: List[str]) -> int:
     return sum([len([x for x in signal.split('|')[1].split() if len(x) in (2,3,4,7)]) for signal in signals])
@@ -39,7 +27,56 @@ print(find_num_of_basic_letters(full_input))
 
 
 # Part 2
+def combine_letters(letter1: str, letter2: str) -> str:
+    # Imagine stacking the displays on top of each other (like bitwise OR)
+    return ''.join(sorted(set(letter1+letter2)))
+
+
 def find_sum_of_outputs(signals: List[str]) -> int:
+    curr_sum = 0
+    for signal in signals:
+        letters = [''.join(sorted(x)) for x in signal.split()]
+        codes = [''] * 10
+
+        for letter in letters:
+            if len(letter) == 2:
+                codes[1] = letter
+            elif len(letter) == 3:
+                codes[7] = letter
+            elif len(letter) == 4:
+                codes[4] = letter
+            elif len(letter) == 7:
+                codes[8] = letter
+
+        for letter in filter(lambda x: len(x) == 6, letters):
+            if combine_letters(letter, codes[1]) == codes[8]:
+                codes[6] = letter
+            elif combine_letters(letter, codes[4]) == codes[8]:
+                codes[0] = letter
+            else:
+                codes[9] = letter
+
+        for letter in filter(lambda x: len(x) == 5, letters):
+            if combine_letters(letter, codes[6]) == codes[6]:
+                codes[5] = letter
+            elif combine_letters(letter, codes[4]) == codes[8]:
+                codes[2] = letter
+            else:
+                codes[3] = letter
+
+        output_signal = [codes.index(''.join(sorted(x))) for x in signal.split('|')[1].split()]
+        curr_sum += int(''.join(map(str, output_signal)))
+
+    return curr_sum
+
+assert find_sum_of_outputs(test_input) == 61229
+print(find_sum_of_outputs(full_input))
+
+
+######
+# don't look please
+
+def find_sum_of_outputs_DEAD(signals: List[str]) -> int:
     curr_sum = 0
     for signal in signals:
         letters = signal.split()
@@ -109,7 +146,3 @@ def find_sum_of_outputs(signals: List[str]) -> int:
             seen_letters[''.join(sorted(output_signal[3]))]
         )
     return curr_sum
-
-assert find_sum_of_outputs(test_input) == 61229
-print(find_sum_of_outputs(full_input))
-
