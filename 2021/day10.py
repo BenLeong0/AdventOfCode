@@ -75,7 +75,7 @@ def find_closing_sequence_scores(lines: List[str]) -> int:
             total_score = total_score * 5 + value
         return total_score
 
-    filtered_scores = list(sorted(filter(lambda x: x is not None, [get_line_score(line) for line in lines])))
+    filtered_scores = list(sorted(filter(lambda x: x is not None, map(get_line_score, lines))))
     return filtered_scores[len(filtered_scores)//2]
 
 assert find_closing_sequence_scores(test_input) == 288957
