@@ -26,6 +26,7 @@ def find_min_fuel_exponential(starting_positions: List[int]) -> int:
 
     def get_triangle_number(n: int) -> int:
         return ((n) * (n + 1)) // 2
+
     def get_total_fuel_usage(pos: int) -> int:
         return sum([get_triangle_number(abs(x-pos)) for x in sorted_positions])
 
