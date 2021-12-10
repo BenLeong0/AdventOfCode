@@ -54,16 +54,15 @@ def find_product_of_largest_basins_sizes(heights: List[List[int]]) -> int:
                 continue
 
             # DFS graph traversal (flood fill)
-            curr_basin = []
             curr_basin_size = 0
-            curr_basin.append((i,j))
+            stack = [(i,j)]
             seen_points.add((i,j))
-            while curr_basin:
-                x,y = curr_basin.pop()
+            while stack:
+                x,y = stack.pop()
                 curr_basin_size += 1
                 filtered_neighbours = filter(nb_filter, get_neighbours(heights, x, y))
                 for neighbour in filtered_neighbours:
-                    curr_basin.append(neighbour)
+                    stack.append(neighbour)
                     seen_points.add(neighbour)
             basin_sizes.append(curr_basin_size)
 
@@ -71,4 +70,4 @@ def find_product_of_largest_basins_sizes(heights: List[List[int]]) -> int:
     return sorted_basin_sizes[0] * sorted_basin_sizes[1] * sorted_basin_sizes[2]
 
 assert find_product_of_largest_basins_sizes(test_input) == 1134
-print(find_product_of_largest_basins_sizes(full_input))
+# print(find_product_of_largest_basins_sizes(full_input))
