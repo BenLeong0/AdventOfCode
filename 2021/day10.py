@@ -34,12 +34,10 @@ def find_syntax_error_score(lines: List[str]) -> int:
         for char in line:
             if char not in pairings_and_scores:
                 stack.append(char)
-            elif len(stack) == 0:
-                return pairings_and_scores[char]["score"]
-            elif stack[-1] == pairings_and_scores[char]["pair"]:
-                stack.pop()
+            elif len(stack) == 0 or stack[-1] != pairings_and_scores[char]["pair"]:
+                return pairings_and_scores[char]["score"]   # Corrupted line
             else:
-                return pairings_and_scores[char]["score"]
+                stack.pop()
         return 0
 
     return sum([get_corrupted_char_score(line) for line in lines])
@@ -64,10 +62,10 @@ def find_closing_sequence_scores(lines: List[str]) -> int:
         for char in line:
             if char in pairings_and_scores:
                 stack.append(char)
-            elif char == pairings_and_scores[stack[-1]]["pair"]:
-                stack.pop()
-            else:
+            elif len(stack) == 0 or char != pairings_and_scores[stack[-1]]["pair"]:
                 return None     # Corrupted line
+            else:
+                stack.pop()
 
         total_score = 0
         while stack:
