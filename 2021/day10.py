@@ -67,7 +67,7 @@ def find_closing_sequence_scores(lines: List[str]) -> int:
             elif char == pairings_and_scores[stack[-1]]["pair"]:
                 stack.pop()
             else:
-                return None     # If corrupted
+                return None     # Corrupted line
 
         total_score = 0
         while stack:
