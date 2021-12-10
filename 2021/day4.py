@@ -1,5 +1,5 @@
 import copy
-from typing import List
+from typing import List, Tuple
 
 
 test_boards = [
@@ -83,21 +83,17 @@ print(find_score_of_best_board(full_boards, full_input))
 # Part 2
 def find_score_of_worst_board(boards: List[Board], inputs: List[int]) -> int:
     boards = copy.deepcopy(boards)
-    for num in inputs:
-        board_num = 0
-        while board_num < len(boards):
-            board = boards[board_num]
+
+    def get_board_age_and_score(board: Board, inputs: List[int]) -> Tuple[int, int]:
+        for (age, num) in enumerate(inputs):
             for i in range(25):
                 if board[i//5][i%5] == num:
                     board[i//5][i%5] = -1
                     break
             if completed_board(board, i):
-                if len(boards) == 1:
-                    return get_board_score(board, num)
-                else:
-                    del boards[board_num]
-            else:
-                board_num += 1
+                return age, get_board_score(board, num)
+
+    return max([get_board_age_and_score(board, inputs) for board in boards], key=lambda x: x[0])[1]
 
 assert find_score_of_worst_board(test_boards, test_input) == 1924
 print(find_score_of_worst_board(full_boards, full_input))
