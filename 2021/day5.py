@@ -47,7 +47,7 @@ def find_number_of_dangerous_spots(
         for spot in curr_spots:
             spot_count[spot] += 1
 
-    return len([x for x in spot_count if spot_count[x] > 1])
+    return len(list(filter(lambda v: v>1, spot_count.values())))
 
 # Part 1
 assert find_number_of_dangerous_spots(test_input) == 5
