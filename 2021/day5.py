@@ -1,3 +1,5 @@
+from collections import defaultdict
+from itertools import product
 from typing import List, Tuple
 
 
@@ -21,75 +23,37 @@ with open("day5.in", "r", newline="\n") as readfile:
     ]
 
 
-# Part 1
-def find_number_of_dangerous_spots(coord_pairs: List[Tuple[Tuple[int, int]]]) -> int:
-    spots_seen_once = set()
-    spots_seen_more_than_once = set()
+# Shared
+def find_number_of_dangerous_spots(
+    coord_pairs: List[Tuple[Tuple[int, int]]],
+    include_diagonals: bool = False,
+) -> int:
+    spot_count = defaultdict(int)
 
     for coord_pair in coord_pairs:
-        if coord_pair[0][0] == coord_pair[1][0]:
-            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1  # Go up or down
-            curr_spots = [
-                (coord_pair[0][0], coord_pair[0][1] + inc_dir * step)
-                for step in range(abs(coord_pair[0][1] - coord_pair[1][1]) + 1)
-            ]
-        elif coord_pair[0][1] == coord_pair[1][1]:
-            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1  # Go left or right
-            curr_spots = [
-                (coord_pair[0][0] + inc_dir * step, coord_pair[0][1])
-                for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
-            ]
-        else:
-            continue
+        x1, y1, x2, y2 = coord_pair[0] + coord_pair[1]
+        curr_spots = []
+        if x1 == x2 or y1 == y2:
+            curr_spots += list(product(
+                range(min(x1, x2), max(x1,x2)+1),
+                range(min(y1, y2), max(y1,y2)+1)
+            ))
+        elif include_diagonals and (y2-y1)/(x2-x1) in (1,-1):
+            curr_spots += list(zip(
+                range(min(x1, x2), max(x1, x2)+1),
+                range(min(y1, y2), max(y1, y2)+1)[::(y2-y1)//(x2-x1)]
+            ))
 
         for spot in curr_spots:
-            if spot in spots_seen_once:
-                spots_seen_more_than_once.add(spot)
-            else:
-                spots_seen_once.add(spot)
+            spot_count[spot] += 1
 
-    return len(spots_seen_more_than_once)
+    return len([x for x in spot_count if spot_count[x] > 1])
 
+# Part 1
 assert find_number_of_dangerous_spots(test_input) == 5
 print(find_number_of_dangerous_spots(full_input))
 
-
 # Part 2
-def find_number_of_dangerous_spots_with_diag(coord_pairs: List[Tuple[Tuple[int, int]]]) -> int:
-    spots_seen_once = set()
-    spots_seen_more_than_once = set()
-
-    for coord_pair in coord_pairs:
-        if coord_pair[0][0] == coord_pair[1][0]:
-            inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1      # Go up or down
-            curr_spots = [
-                (coord_pair[0][0], coord_pair[0][1] + inc_dir * step)
-                for step in range(abs(coord_pair[0][1] - coord_pair[1][1]) + 1)
-            ]
-        elif coord_pair[0][1] == coord_pair[1][1]:
-            inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1      # Go left or right
-            curr_spots = [
-                (coord_pair[0][0] + inc_dir * step, coord_pair[0][1])
-                for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
-            ]
-        elif abs(coord_pair[0][0] - coord_pair[1][0]) == abs(coord_pair[0][1] - coord_pair[1][1]):
-            x_inc_dir = 1 if coord_pair[0][0] < coord_pair[1][0] else -1    # Go left or right
-            y_inc_dir = 1 if coord_pair[0][1] < coord_pair[1][1] else -1    # Go up or down
-            curr_spots = [
-                (coord_pair[0][0] + x_inc_dir * step, coord_pair[0][1] + y_inc_dir * step)
-                for step in range(abs(coord_pair[0][0] - coord_pair[1][0]) + 1)
-            ]
-        else:
-            continue
-
-        for spot in curr_spots:
-            if spot in spots_seen_once:
-                spots_seen_more_than_once.add(spot)
-            else:
-                spots_seen_once.add(spot)
-
-    return len(spots_seen_more_than_once)
-
-assert find_number_of_dangerous_spots_with_diag(test_input) == 12
-print(find_number_of_dangerous_spots_with_diag(full_input))
+assert find_number_of_dangerous_spots(test_input, True) == 12
+print(find_number_of_dangerous_spots(full_input, True))
 
