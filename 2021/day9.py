@@ -50,7 +50,7 @@ def find_product_of_largest_basins_sizes(heights: List[List[int]]) -> int:
     nb_filter = lambda nb: (nb not in seen_points) and (heights[nb[0]][nb[1]] != 9)
     for i in range(len(heights)):
         for j in range(len(heights[0])):
-            if (i,j) in seen_points or heights[i][j] == 9:
+            if not nb_filter((i,j)):
                 continue
 
             # DFS graph traversal (flood fill)
@@ -70,4 +70,4 @@ def find_product_of_largest_basins_sizes(heights: List[List[int]]) -> int:
     return sorted_basin_sizes[0] * sorted_basin_sizes[1] * sorted_basin_sizes[2]
 
 assert find_product_of_largest_basins_sizes(test_input) == 1134
-# print(find_product_of_largest_basins_sizes(full_input))
+print(find_product_of_largest_basins_sizes(full_input))
