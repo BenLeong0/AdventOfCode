@@ -47,7 +47,10 @@ print(find_total_risk_level(full_input))
 def find_product_of_largest_basins_sizes(heights: List[List[int]]) -> int:
     basin_sizes = []
     seen_points = set()
+
+    # Ignore points with height 9, and don't repeat points
     nb_filter = lambda nb: (nb not in seen_points) and (heights[nb[0]][nb[1]] != 9)
+
     for i in range(len(heights)):
         for j in range(len(heights[0])):
             if not nb_filter((i,j)):
