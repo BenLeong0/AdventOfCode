@@ -44,7 +44,7 @@ def reset_flashers(octopuses: List[List[int]]) -> None:
                 octopuses[i][j] = 0
 
 
-def get_octopuses_to_flash(octopuses: List[List[int]], flashed: Set[Tuple[int,int]]) -> None:
+def get_flashers(octopuses: List[List[int]], flashed: Set[Tuple[int,int]]) -> None:
     flashers = []
     for i in range(len(octopuses)):
         for j in range(len(octopuses[0])):
@@ -53,7 +53,7 @@ def get_octopuses_to_flash(octopuses: List[List[int]], flashed: Set[Tuple[int,in
     return flashers
 
 
-def get_neighbours(octopuses: List[List[int]], i: int, j: int) -> List[Tuple[int, int]]:
+def get_neighbourhood(octopuses: List[List[int]], i: int, j: int) -> List[Tuple[int, int]]:
     height = len(octopuses)
     width = len(octopuses[0])
     return [ 
@@ -71,10 +71,10 @@ def count_flashes(octopuses: List[List[int]], steps: int = 100) -> int:
     for _ in range(steps):
         flashed: Set[Tuple[int,int]] = set()
         increment_grid(octopuses)
-        while len(flashers := get_octopuses_to_flash(octopuses, flashed)) > 0:
+        while len(flashers := get_flashers(octopuses, flashed)) > 0:
             for (i,j) in flashers:
                 flashed.add((i,j))
-                for (nb_i, nb_j) in get_neighbours(octopuses, i, j):
+                for (nb_i, nb_j) in get_neighbourhood(octopuses, i, j):
                     octopuses[nb_i][nb_j] += 1
                 total += 1
         reset_flashers(octopuses)
@@ -94,10 +94,10 @@ def find_first_synchronised_flash(octopuses: List[List[int]]) -> int:
     while True:
         flashed: Set[Tuple[int,int]] = set()
         increment_grid(octopuses)
-        while len(flashers := get_octopuses_to_flash(octopuses, flashed)) > 0:
+        while len(flashers := get_flashers(octopuses, flashed)) > 0:
             for (i,j) in flashers:
                 flashed.add((i,j))
-                for (nb_i, nb_j) in get_neighbours(octopuses, i, j):
+                for (nb_i, nb_j) in get_neighbourhood(octopuses, i, j):
                     octopuses[nb_i][nb_j] += 1
         reset_flashers(octopuses)
 
