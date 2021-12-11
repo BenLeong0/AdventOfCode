@@ -29,16 +29,14 @@ test_boards = [
 test_input = [7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1]
 
 with open("day4.in", "r", newline="\n") as readfile:
-    full_input = [int(x) for x in readfile.readline()[:-1].split(',')]
-    full_boards = []
-    curr_board = []
-    for line in readfile.readlines()[1:]:
-        if line == '\n':
-            full_boards.append(curr_board)
-            curr_board = []
-        else:
-            curr_board.append([int(x) for x in line[:-1].split()])
-    full_boards = full_boards
+    file = readfile.read().split('\n\n')
+    full_input = [int(x) for x in file[0].split(',')]
+    full_boards = [
+        [
+            [int(x) for x in row.split()]
+            for row in board.split('\n')
+        ] for board in file[1:-1]
+    ]
 
 
 
