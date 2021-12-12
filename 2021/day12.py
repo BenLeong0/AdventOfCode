@@ -23,9 +23,9 @@ def get_number_of_routes(edges: List[Tuple[str, str]]) -> int:
             return 1
 
         num_of_routes = 0
-        nbs = adj_dict[curr_path[-1]]
-        for nb in filter(lambda x: x.isupper() or not x in curr_path, nbs):
-            num_of_routes += get_number_of_routes_from_point(curr_path + [nb])
+        neighbours = adj_dict[curr_path[-1]]
+        for neighbour in filter(lambda x: x.isupper() or not x in curr_path, neighbours):
+            num_of_routes += get_number_of_routes_from_point(curr_path + [neighbour])
 
         return num_of_routes
     
@@ -46,8 +46,8 @@ def get_number_of_routes(edges: List[Tuple[str, str]]) -> int:
             return 1
 
         num_of_routes = 0
-        nbs = adj_dict[curr_path[-1]]
-        for nb in nbs:
+        neighbours = adj_dict[curr_path[-1]]
+        for nb in neighbours:
             if nb.islower() and curr_path.count(nb) > 1 or nb == "start":
                 continue
             elif nb.isupper() or curr_path.count(nb) == 0:
