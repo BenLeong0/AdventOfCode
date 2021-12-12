@@ -104,6 +104,6 @@ def find_first_synchronised_flash(octopuses: List[List[int]]) -> int:
         if len(flashed) == 100:
             return step
         step += 1
-    
+
 assert find_first_synchronised_flash(test_input) == 195
 print(find_first_synchronised_flash(full_input))
