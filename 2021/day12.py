@@ -1,6 +1,5 @@
 from collections import defaultdict
-import copy
-from typing import DefaultDict, Dict, List, Optional, Set, Tuple
+from typing import DefaultDict, Dict, List, Tuple
 
 from day12_input import *
 
@@ -28,7 +27,7 @@ def get_number_of_routes(edges: List[Tuple[str, str]]) -> int:
             num_of_routes += get_number_of_routes_from_point(curr_path + [neighbour])
 
         return num_of_routes
-    
+
     return get_number_of_routes_from_point(["start"])
 
 assert get_number_of_routes(test_input1) == 10
@@ -55,7 +54,7 @@ def get_number_of_routes(edges: List[Tuple[str, str]]) -> int:
             elif curr_path.count(nb) == 1 and revisited is False:
                 num_of_routes += get_number_of_routes_from_point(curr_path+[nb], revisited=True)
         return num_of_routes
-    
+
     return get_number_of_routes_from_point(["start"])
 
 assert get_number_of_routes(test_input1) == 36
