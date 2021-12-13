@@ -37,23 +37,23 @@ with open("day13.in", "r", newline="\n") as readfile:
 
 
 # Part 1
-def count_visible_dots_after_folding(
+def count_visible_dots_after_folding_once(
     dots: Set[Tuple[int, int]],
     folds: List[Tuple[Literal["x","y"], int]]
 ) -> int:
     dots = copy.deepcopy(dots)
-    for (axis, coord) in folds:
-        idx = 0 if axis == "x" else 1
-        for dot in tuple(filter(lambda d: d[idx] > coord, dots)):
-            new_dot = list(dot)
-            new_dot[idx] = 2*coord - new_dot[idx]
-            dots.add(tuple(new_dot))
-            dots.remove(dot)
+    axis, coord = folds[0]
+    idx = 0 if axis == "x" else 1
+    for dot in tuple(filter(lambda d: d[idx] > coord, dots)):
+        new_dot = list(dot)
+        new_dot[idx] = 2*coord - new_dot[idx]
+        dots.add(tuple(new_dot))
+        dots.remove(dot)
 
     return len(dots)
 
-assert count_visible_dots_after_folding(test_dots, [test_folds[0]]) == 17
-print(count_visible_dots_after_folding(full_dots, [full_folds[0]]))
+assert count_visible_dots_after_folding_once(test_dots, test_folds) == 17
+print(count_visible_dots_after_folding_once(full_dots, full_folds))
 
 
 # Part 2
