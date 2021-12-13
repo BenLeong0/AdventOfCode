@@ -1,7 +1,7 @@
-from typing import List, Set
+from typing import List, Tuple
 
 
-test_input1: List[Set[str]] = [
+test_input1: List[Tuple[str, str]] = [
     ("start", "A"),
     ("start", "b"),
     ("A", "c"),
@@ -11,7 +11,7 @@ test_input1: List[Set[str]] = [
     ("b", "end"),
 ]
 
-test_input2: List[Set[str]] = [
+test_input2: List[Tuple[str, str]] = [
     ("dc", "end"),
     ("HN", "start"),
     ("start", "kj"),
@@ -24,7 +24,7 @@ test_input2: List[Set[str]] = [
     ("kj", "dc"),
 ]
 
-test_input3: List[Set[str]] = [
+test_input3: List[Tuple[str, str]] = [
     ("fs", "end"),
     ("he", "DX"),
     ("fs", "he"),
@@ -45,7 +45,7 @@ test_input3: List[Set[str]] = [
     ("start", "RW"),
 ]
 
-full_input: List[Set[str]] = [
+full_input: List[Tuple[str, str]] = [
     ("start","YY"),
     ("av","rz"),
     ("rz","VH"),
