@@ -38,22 +38,25 @@ def get_neighbours(heights: List[List[int]], i: int, j: int) -> List[Tuple[int, 
 # Part 1
 def find_lowest_risk(graph: List[List[int]]) -> int:
     height, width = len(graph), len(graph[0])
-    distances = {(i,j):float('inf') for i in range(height) for j in range(width)}
-    unvisited = set(distances.keys())
+    distances = {(0,0):0}
+    visited = set()
     def nodeNotVisited(node: Tuple[int, int]):
-        return node in unvisited
+        return node not in visited
+    def nodeNotSeenOrVisited(node: Tuple[int, int]):
+        return node not in visited and node not in distances
 
     distances[(0, 0)] = 0
-    while (height-1, width-1) in unvisited:
+    while (height-1, width-1) not in distances:
         curr_node = min(filter(nodeNotVisited, distances), key=lambda node: distances[node])
-        for (x,y) in get_neighbours(graph, *curr_node):
-            distances[(x,y)] = min(distances[curr_node] + graph[x][y], distances[(x,y)])
-        unvisited.remove(curr_node)
+        for (x,y) in filter(nodeNotSeenOrVisited, get_neighbours(graph, *curr_node)):
+            distances[(x,y)] = distances[curr_node] + graph[x][y]
+        visited.add(curr_node)
+        del distances[curr_node]
 
     return distances[(height-1, width-1)]
 
 assert find_lowest_risk(test_input) == 40
-# print(find_lowest_risk(full_input))
+print(find_lowest_risk(full_input))
 
 
 # Part 2
