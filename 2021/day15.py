@@ -1,5 +1,5 @@
 import copy
-from typing import List, Tuple
+from typing import Dict, List, Set, Tuple
 
 
 test_input: List[List[int]] = [
@@ -15,34 +15,39 @@ test_input: List[List[int]] = [
     [2, 3, 1, 1, 9, 4, 4, 5, 8, 1],
 ]
 
+# Project Euler question 83 is identical, so also tested here
+euler_test_input = [
+    [131,673,234,103,18],
+    [201,96,342,965,150],
+    [630,803,746,422,111],
+    [537,699,497,121,956],
+    [805,732,524,37,331]
+]
+
 with open("day15.in", "r", newline="\n") as readfile:
     full_input = [[int(x) for x in line[:-1]] for line in readfile.readlines()]
 
+with open("day15euler.in", "r", newline="\n") as readfile:
+    euler_full_input = [[int(x) for x in line.split(",")] for line in readfile.readlines()]
+
 
 # Shared
-def get_neighbours(heights: List[List[int]], i: int, j: int) -> List[Tuple[int, int]]:
-    length = len(heights)
-    width = len(heights[0])
-    neighbours = []
-    if i > 0:
-        neighbours.append((i-1, j))
-    if i < length - 1:
-        neighbours.append((i+1, j))
-    if j > 0:
-        neighbours.append((i, j-1))
-    if j < width - 1:
-        neighbours.append((i, j+1))
-    return neighbours
+def get_neighbours(graph: List[List[int]], x_coord: int, y_coord: int) -> List[Tuple[int, int]]:
+    return [
+        (x_coord + i, y_coord + j) for i in (-1, 0, 1) for j in (-1, 0, 1)
+        if abs(i) != abs(j) and 0 <= x_coord+i < len(graph) and 0 <= y_coord+j < len(graph[0])
+    ]
 
 
 # Part 1
 def find_lowest_risk(graph: List[List[int]]) -> int:
     height, width = len(graph), len(graph[0])
-    distances = {(0,0):0}
-    visited = set()
-    def nodeNotVisited(node: Tuple[int, int]):
+    distances: Dict[Tuple[int,int],int] = {(0,0): 0}
+    visited: Set[Tuple[int,int]] = set()
+
+    def nodeNotVisited(node: Tuple[int, int]) -> bool:
         return node not in visited
-    def nodeNotSeenOrVisited(node: Tuple[int, int]):
+    def nodeNotSeenOrVisited(node: Tuple[int, int]) -> bool:
         return node not in visited and node not in distances
 
     distances[(0, 0)] = 0
@@ -57,6 +62,9 @@ def find_lowest_risk(graph: List[List[int]]) -> int:
 
 assert find_lowest_risk(test_input) == 40
 print(find_lowest_risk(full_input))
+
+assert find_lowest_risk(euler_test_input) + euler_test_input[0][0] == 2297
+print(find_lowest_risk(euler_full_input) + euler_full_input[0][0])
 
 
 # Part 2
@@ -77,8 +85,8 @@ def find_lowest_risk_tiled(graph: List[List[int]]) -> int:
             for tile in row_of_tiles:
                 curr_row += tile[i]
             full_map.append(curr_row)
+
     return find_lowest_risk(full_map)
 
 assert find_lowest_risk_tiled(test_input) == 315
 print(find_lowest_risk_tiled(full_input))
-
