@@ -32,8 +32,6 @@ with open("day13.in", "r", newline="\n") as readfile:
     file = readfile.read().replace('\r\n', '\n').split('\n\n')
     full_dots = {eval("("+x+")") for x in file[0].split('\n')}
     full_folds = [(x.split("=")[0][-1], int(x.split("=")[1])) for x in file[1].split("\n")[:-1]]
-    # full_folds = [x.split("=")[0] for x in file[1].split("\n")[:-1]]
-    # print(full_folds)
 
 
 # Part 1
