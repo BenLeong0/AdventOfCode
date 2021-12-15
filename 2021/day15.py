@@ -1,3 +1,4 @@
+import copy
 from typing import List, Tuple
 
 
@@ -14,7 +15,7 @@ test_input: List[List[int]] = [
     [2, 3, 1, 1, 9, 4, 4, 5, 8, 1],
 ]
 
-with open("day9.in", "r", newline="\n") as readfile:
+with open("day15.in", "r", newline="\n") as readfile:
     full_input = [[int(x) for x in line[:-1]] for line in readfile.readlines()]
 
 
@@ -34,24 +35,47 @@ def get_neighbours(heights: List[List[int]], i: int, j: int) -> List[Tuple[int, 
     return neighbours
 
 
-def dijkstras(graph: List[List[int]]) -> int:
+# Part 1
+def find_lowest_risk(graph: List[List[int]]) -> int:
     height, width = len(graph), len(graph[0])
     distances = {(i,j):float('inf') for i in range(height) for j in range(width)}
     unvisited = set(distances.keys())
     def nodeNotVisited(node: Tuple[int, int]):
         return node in unvisited
-    
-    curr_node = (0, 0)
-    distances[curr_node] = 0
+
+    distances[(0, 0)] = 0
     while (height-1, width-1) in unvisited:
+        curr_node = min(filter(nodeNotVisited, distances), key=lambda node: distances[node])
         for (x,y) in get_neighbours(graph, *curr_node):
             distances[(x,y)] = min(distances[curr_node] + graph[x][y], distances[(x,y)])
         unvisited.remove(curr_node)
-        curr_node = min(filter(nodeNotVisited, distances), key=lambda node: distances[node])
-    
+
     return distances[(height-1, width-1)]
 
+assert find_lowest_risk(test_input) == 40
+# print(find_lowest_risk(full_input))
 
-# Part 1
-assert dijkstras(test_input) == 40
-print(dijkstras(full_input))
+
+# Part 2
+def increment_grid(graph: List[List[int]], increase_by: int) -> List[List[int]]:
+    new_graph = copy.deepcopy(graph)
+    for row_i, entry in enumerate(new_graph):
+        for col_i, value in enumerate(entry):
+            new_graph[row_i][col_i] = ((value + increase_by - 1) % 9) + 1
+    return new_graph
+
+
+def find_lowest_risk_tiled(graph: List[List[int]]) -> int:
+    tiles = [[increment_grid(graph, i+j) for j in range(5)] for i in range(5)]
+    full_map = []
+    for row_of_tiles in tiles:
+        for i in range(len(row_of_tiles[0])):
+            curr_row = []
+            for tile in row_of_tiles:
+                curr_row += tile[i]
+            full_map.append(curr_row)
+    return find_lowest_risk(full_map)
+
+assert find_lowest_risk_tiled(test_input) == 315
+print(find_lowest_risk_tiled(full_input))
+
