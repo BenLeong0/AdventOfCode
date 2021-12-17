@@ -31,6 +31,7 @@ def find_max_height(bounds: InputTypeAlias) -> int:
             ):
                 max_y_vel = max(max_y_vel, -init_vel-1)
 
+    # Height = v + (v-1) + (v-2) + ... + 1 = T_v
     triangle_number = lambda n: (n+1)*(n)//2
     return triangle_number(max_y_vel)
 
