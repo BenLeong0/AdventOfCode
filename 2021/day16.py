@@ -72,11 +72,10 @@ def evaluate_with_operations(hex_input: str) -> int:
     }
 
     def get_packet_info(start_idx: int = 0) -> Tuple[int,int,int]:
-        """Return tuple of form `(version sum, packet length, value)`"""
+        """Return tuple of form `(end_idx, value)`"""
         if "1" not in binary_rep[start_idx:]:
             return 0, len(binary_rep)
 
-        version = int(binary_rep[start_idx+0:start_idx+3], 2)
         type_id = int(binary_rep[start_idx+3:start_idx+6], 2)
 
         if type_id == 4:
@@ -88,7 +87,7 @@ def evaluate_with_operations(hex_input: str) -> int:
                 curr_idx += 5
                 if curr_packet[0] == '0':
                     break
-            return version, curr_idx, int(curr_value_bin, 2)
+            return curr_idx, int(curr_value_bin, 2)
 
         length_type_id = binary_rep[start_idx+6]
         operation = operations[type_id]
@@ -100,21 +99,19 @@ def evaluate_with_operations(hex_input: str) -> int:
             length = int(binary_rep[idx_past_header:idx_past_header+15], 2)
             curr_idx = idx_past_header + 15
             while (curr_idx < idx_past_header + length + 15) and ('1' in binary_rep[curr_idx:]):
-                new_version, curr_idx, new_value = get_packet_info(curr_idx)
-                version += new_version
+                curr_idx, new_value = get_packet_info(curr_idx)
                 curr_value = operation(curr_value, new_value)
-            return version, curr_idx, curr_value
+            return curr_idx, curr_value
 
         if length_type_id == '1':
             num_of_subpackets = int(binary_rep[idx_past_header:idx_past_header+11], 2)
             curr_idx = idx_past_header + 11
             for _ in range(num_of_subpackets):
-                new_version, curr_idx, new_value = get_packet_info(curr_idx)
-                version += new_version
+                curr_idx, new_value = get_packet_info(curr_idx)
                 curr_value = operation(curr_value, new_value)
-            return version, curr_idx, curr_value
+            return curr_idx, curr_value
 
-    return get_packet_info()[2]
+    return get_packet_info()[1]
 
 assert evaluate_with_operations("C200B40A82") == 3
 assert evaluate_with_operations("04005AC33890") == 54
