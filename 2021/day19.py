@@ -1,5 +1,6 @@
 import copy
 from itertools import product
+import time
 from typing import List, Literal, Optional, Set, Tuple
 
 
@@ -123,4 +124,4 @@ def get_largest_manhatten_distance(beacon_lists: List[BeaconList]) -> int:
     return max_distance
 
 assert get_largest_manhatten_distance(test_input) == 3621
-print(get_largest_manhatten_distance(full_input))
+print(get_largest_manhatten_distance(full_input))   # 344.9102027 seconds
