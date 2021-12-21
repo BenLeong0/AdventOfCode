@@ -7,7 +7,7 @@ full_input = (7, 2)
 
 
 # Shared
-def f(n: int) -> int:
+def mod(n: int) -> int:
     return ((n - 1) % 10) + 1
 
 
@@ -19,7 +19,7 @@ def get_score_turns_product(p1_start: int, p2_start: int) -> int:
     curr_player = 0
     while True:
         num_dice_throws += 3
-        positions[curr_player] = f(positions[curr_player] + 3*(num_dice_throws-1))
+        positions[curr_player] = mod(positions[curr_player] + 3*(num_dice_throws-1))
         scores[curr_player] += positions[curr_player]
         if scores[curr_player] >= 1000:
             return num_dice_throws * scores[1-curr_player]
@@ -41,11 +41,11 @@ def get_winning_number_of_universe(p1_start: int, p2_start: int) -> int:
     for p1_score, p2_score in product(range(1, max_score + 1), range(max_score + 1)):
         for p1_pos, p2_pos in product(range(1, 11), range(1, 11)):
             positions_and_scores[((p1_pos, p1_score), (p2_pos, p2_score), 1)] = sum([
-                positions_and_scores[((f(p1_pos-x), p1_score-p1_pos), (p2_pos, p2_score), 0)]
+                positions_and_scores[((mod(p1_pos-x), p1_score-p1_pos), (p2_pos, p2_score), 0)]
                 for x in possible_moves if p1_score-p1_pos < 21 and p2_score < 21
             ])
             positions_and_scores[((p1_pos, p1_score), (p2_pos, p2_score), 0)] = sum([
-                positions_and_scores[((p1_pos, p1_score), (f(p2_pos-x), p2_score-p2_pos), 1)]
+                positions_and_scores[((p1_pos, p1_score), (mod(p2_pos-x), p2_score-p2_pos), 1)]
                 for x in possible_moves if p2_score-p2_pos < 21 and p1_score < 21
             ])
 
