@@ -35,7 +35,7 @@ def get_winning_number_of_universe(p1_start: int, p2_start: int) -> int:
         ((p1_start, 0), (p2_start, 0), 0): 1,
     }
     positions_and_scores = defaultdict(int, start_position_and_score)
-    possible_moves = tuple(sum(x) for x in product(*([(1, 2, 3)] * 3)))
+    possible_moves = [sum(x) for x in product(*([(1, 2, 3)] * 3))]
     max_score = 21 + max(possible_moves)
 
     for p1_score, p2_score in product(range(1, max_score + 1), range(max_score + 1)):
