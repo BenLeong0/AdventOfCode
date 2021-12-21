@@ -31,13 +31,14 @@ print(get_score_turns_product(*full_input))
 
 # Part 2 (dynamic programming wooo)
 def get_winning_number_of_universe(p1_start: int, p2_start: int) -> int:
-    start_position_and_score: Dict[Tuple[Tuple[int,int],Tuple[int,int],Literal[0,1]],int] = {
+    start_position_and_score: Dict[Tuple[Tuple[int, int], Tuple[int, int], Literal[0, 1]], int] = {
         ((p1_start, 0), (p2_start, 0), 0): 1,
     }
     positions_and_scores = defaultdict(int, start_position_and_score)
-    possible_moves = tuple(sum(x) for x in product((1,2,3),(1,2,3),(1,2,3)))
+    possible_moves = tuple(sum(x) for x in product(*([(1, 2, 3)] * 3)))
     max_score = 21 + max(possible_moves)
-    for p2_score, p1_score in product(range(max_score+1), range(1,max_score+1)):
+
+    for p1_score, p2_score in product(range(1, max_score + 1), range(max_score + 1)):
         for p1_pos, p2_pos in product(range(1, 11), range(1, 11)):
             positions_and_scores[((p1_pos, p1_score), (p2_pos, p2_score), 1)] = sum([
                 positions_and_scores[((f(p1_pos-x), p1_score-p1_pos), (p2_pos, p2_score), 0)]
