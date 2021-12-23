@@ -43,7 +43,6 @@ print(count_activated_cubes(full_input))
 
 
 # Part 2
-
 def check_if_intersect(cuboid1: Cuboid, cuboid2: Cuboid) -> bool:
     return (
         max(cuboid1[X][MIN], cuboid2[X][MIN]) <= min(cuboid1[X][MAX], cuboid2[X][MAX]) and
