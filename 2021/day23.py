@@ -22,12 +22,19 @@ full_input = [
 # Shared
 STEP_COSTS = { "A": 1, "B": 10, "C": 100, "D": 1000 }
 
-Coord = Literal["H0","H1","H2","H3","H4","H5","H6","A0","B0","C0","D0","A1","B1","C1","D1"]
+Coord = Literal[
+    "H0","H1","H2","H3","H4","H5","H6",
+    "A0","B0","C0","D0","A1","B1","C1","D1",
+    "A2","B2","C2","D2","A3","B3","C3","D3"
+]
 BugType = Literal["A","B","C","D"]
 class CoordInfo(TypedDict):
     curr: Optional[BugType]
     adj: Set[Tuple[Coord, int]]
 Map = Dict[Coord, CoordInfo]
+
+def get_current_layout(map: Map) -> str:
+    return '_'.join([k + str(v["curr"]) for k,v in sorted(map.items())])
 
 def is_at_home(coord: Coord, map: Map, bug_type: BugType) -> bool:
     if coord[0] != bug_type:
@@ -37,14 +44,16 @@ def is_at_home(coord: Coord, map: Map, bug_type: BugType) -> bool:
         if coord2[0] == bug_type and int(coord2[1]) > int(coord[1])
     )
 
-
-# Part 1
 def is_not_trapped(coord: Coord, map: Map) -> bool:
-    return coord[1] != "1" or coord[0] == "H" or map[coord[0] + '0']["curr"] is None
+    if coord[0] == "H" or coord[1] == "0":
+        return True
+    return map[coord[0] + str(int(coord[1]) - 1)]["curr"] is None
 
 def is_moveable(coord: Coord, map: Map) -> bool:
     return not is_at_home(coord, map, map[coord]["curr"]) and is_not_trapped(coord, map)
 
+
+# Part 1
 def get_print_layout(map: Map) -> str:
     f = lambda coord: map[coord]["curr"] if map[coord]["curr"] is not None else '.'
     return (
@@ -99,10 +108,7 @@ def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
 
     return min_energy_memo[layout]
 
-def get_current_layout(map: Map) -> str:
-    return '_'.join([k + str(v["curr"]) for k,v in sorted(map.items())])
-
-def get_min_energy_init(inpt: List[str]) -> int:
+def get_min_energy_init1(inpt: List[str]) -> int:
     start_map: Map = {
         "H0": {"curr": None,        "adj": {("H1", 1)}},
         "H1": {"curr": None,        "adj": {("H0", 1), ("H2", 2), ("A0", 2)}},
@@ -124,25 +130,12 @@ def get_min_energy_init(inpt: List[str]) -> int:
     memo: Dict[str, int] = {finished_layout: 0}
     return get_min_energy(start_map, min_energy_memo=memo)
 
-assert get_min_energy_init(test_input) == 12521
-print(get_min_energy_init(full_input))
+assert get_min_energy_init1(test_input) == 12521
+print(get_min_energy_init1(full_input))
 
 
 # Part 2
-STEP_COSTS = { "A": 1, "B": 10, "C": 100, "D": 1000 }
-
-Coord = Literal[
-    "H0","H1","H2","H3","H4","H5","H6",
-    "A0","B0","C0","D0","A1","B1","C1","D1",
-    "A2","B2","C2","D2","A3","B3","C3","D3"
-]
-BugType = Literal["A","B","C","D"]
-class CoordInfo(TypedDict):
-    curr: Optional[BugType]
-    adj: Set[Tuple[Coord, int]]
-Map = Dict[Coord, CoordInfo]
-
-def get_print_layout(map: Map) -> str:
+def get_print_layout2(map: Map) -> str:
     f = lambda coord: map[coord]["curr"] if map[coord]["curr"] is not None else '.'
     return (
         f("H0") + f("H1") + " " + f("H2") + " " + f("H3") +
@@ -152,17 +145,6 @@ def get_print_layout(map: Map) -> str:
         f("A2") + " " + f("B2") + " " + f("C2") + " " + f("D2") + "\n  " +
         f("A3") + " " + f("B3") + " " + f("C3") + " " + f("D3") + "\n==========="
     )
-
-def get_current_layout(map: Map) -> str:
-    return '_'.join([k + str(v["curr"]) for k,v in sorted(map.items())])
-
-def is_not_trapped(coord: Coord, map: Map) -> bool:
-    if coord[0] == "H" or coord[1] == "0":
-        return True
-    return map[coord[0] + str(int(coord[1]) - 1)]["curr"] is None
-
-def is_moveable(coord: Coord, map: Map) -> bool:
-    return not is_at_home(coord, map, map[coord]["curr"]) and is_not_trapped(coord, map)
 
 def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
     if (layout := get_current_layout(map)) in min_energy_memo:
@@ -212,7 +194,7 @@ def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
 
     return min_energy_memo[layout]
 
-def get_min_energy_init(inpt: List[str]) -> int:
+def get_min_energy_init2(inpt: List[str]) -> int:
     start_map: Map = {
         "H0": {"curr": None,        "adj": {("H1", 1)}},
         "H1": {"curr": None,        "adj": {("H0", 1), ("H2", 2), ("A0", 2)}},
@@ -242,5 +224,5 @@ def get_min_energy_init(inpt: List[str]) -> int:
     memo: Dict[str, int] = {finished_layout: 0}
     return get_min_energy(start_map, min_energy_memo=memo)
 
-assert get_min_energy_init(test_input) == 44169
-print(get_min_energy_init(full_input))
+assert get_min_energy_init2(test_input) == 44169
+print(get_min_energy_init2(full_input))
