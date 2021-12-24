@@ -52,17 +52,6 @@ def is_not_trapped(coord: Coord, map: Map) -> bool:
 def is_moveable(coord: Coord, map: Map) -> bool:
     return not is_at_home(coord, map, map[coord]["curr"]) and is_not_trapped(coord, map)
 
-
-# Part 1
-def get_print_layout(map: Map) -> str:
-    f = lambda coord: map[coord]["curr"] if map[coord]["curr"] is not None else '.'
-    return (
-        f("H0") + f("H1") + " " + f("H2") + " " + f("H3") +
-        " " + f("H4") + " " + f("H5") + f("H6") + "\n  " +
-        f("A0") + " " + f("B0") + " " + f("C0") + " " + f("D0") + "\n  " +
-        f("A1") + " " + f("B1") + " " + f("C1") + " " + f("D1") + "\n==========="
-    )
-
 def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
     if (layout := get_current_layout(map)) in min_energy_memo:
         return min_energy_memo[layout]
@@ -76,9 +65,10 @@ def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
         bug_type: BugType = map[coord]["curr"]
         curr_coord = coord
 
-        if curr_coord[0] != "H" and curr_coord[1] == "1":       # Already filtered out if trapped
-            curr_coord: Coord = curr_coord[0] + '0'                    # Move from deep to shallow
-            energy_costs[curr_coord] = STEP_COSTS[bug_type]
+        if curr_coord[0] != "H" and (depth := int(curr_coord[1])) > 0:
+            for d in range(depth-1, -1, -1):
+                curr_coord: Coord = curr_coord[0] + str(d)                    # Move from deep to shallow
+                energy_costs[curr_coord] = STEP_COSTS[bug_type] * (depth - d)
 
         stack: List[Coord] = [curr_coord]       # Iterative DFS
         while stack:
@@ -108,6 +98,8 @@ def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
 
     return min_energy_memo[layout]
 
+
+# Part 1
 def get_min_energy_init1(inpt: List[str]) -> int:
     start_map: Map = {
         "H0": {"curr": None,        "adj": {("H1", 1)}},
@@ -135,65 +127,6 @@ print(get_min_energy_init1(full_input))
 
 
 # Part 2
-def get_print_layout2(map: Map) -> str:
-    f = lambda coord: map[coord]["curr"] if map[coord]["curr"] is not None else '.'
-    return (
-        f("H0") + f("H1") + " " + f("H2") + " " + f("H3") +
-        " " + f("H4") + " " + f("H5") + f("H6") + "\n  " +
-        f("A0") + " " + f("B0") + " " + f("C0") + " " + f("D0") + "\n  " +
-        f("A1") + " " + f("B1") + " " + f("C1") + " " + f("D1") + "\n  " +
-        f("A2") + " " + f("B2") + " " + f("C2") + " " + f("D2") + "\n  " +
-        f("A3") + " " + f("B3") + " " + f("C3") + " " + f("D3") + "\n==========="
-    )
-
-def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
-    if (layout := get_current_layout(map)) in min_energy_memo:
-        return min_energy_memo[layout]
-
-    min_energy_memo[layout] = float("inf")
-    bug_locations: List[Coord] = [coord for coord, data in map.items() if data["curr"] is not None]
-    moveable_bug_locations = list(filter(partial(is_moveable, map=map), bug_locations))
-
-    for coord in moveable_bug_locations:
-        energy_costs: Dict[Coord, int] = {coord: 0}
-        bug_type: BugType = map[coord]["curr"]
-        curr_coord = coord
-
-        if curr_coord[0] != "H" and (depth := int(curr_coord[1])) > 0:
-            for d in range(depth-1, -1, -1):
-                curr_coord: Coord = curr_coord[0] + str(d)                    # Move from deep to shallow
-                energy_costs[curr_coord] = STEP_COSTS[bug_type] * (depth - d)
-
-        stack: List[Coord] = [curr_coord]       # Iterative DFS
-        while stack:
-            curr_coord = stack.pop()
-
-            if is_at_home(curr_coord, map, bug_type):
-                new_map = copy.deepcopy(map)
-                new_map[curr_coord]["curr"], new_map[coord]["curr"] = new_map[coord]["curr"], None
-                min_energy_memo[layout] = energy_costs[curr_coord] + get_min_energy(new_map, min_energy_memo)
-                return min_energy_memo[layout]
-
-            for adj_coord, dist in map[curr_coord]["adj"]:
-                if (
-                    adj_coord in energy_costs or
-                    map[adj_coord]["curr"] is not None or
-                    adj_coord[0] not in {"H", bug_type}
-                ):
-                    continue
-                energy_costs[adj_coord] = energy_costs[curr_coord] + dist * STEP_COSTS[bug_type]
-                stack.append(adj_coord)
-
-        for end_coord, move_energy_cost in energy_costs.items():
-            if end_coord[0] != "H" or coord[0] == "H":
-                continue
-            new_map = copy.deepcopy(map)
-            new_map[end_coord]["curr"], new_map[coord]["curr"] = new_map[coord]["curr"], None
-            total_energy_cost = move_energy_cost + get_min_energy(new_map, min_energy_memo)
-            min_energy_memo[layout] = min(min_energy_memo[layout], total_energy_cost)
-
-    return min_energy_memo[layout]
-
 def get_min_energy_init2(inpt: List[str]) -> int:
     start_map: Map = {
         "H0": {"curr": None,        "adj": {("H1", 1)}},
