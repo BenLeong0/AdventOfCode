@@ -3,33 +3,23 @@ from functools import partial
 from typing import Dict, List, Literal, Optional, Set, Tuple, TypedDict
 
 test_input = [
-    list("#############"),
-    list("#...........#"),
-    list("###B#C#B#D###"),
-    list("  #A#D#C#A#  "),
-    list("  #########  "),
+    "#############",
+    "#...........#",
+    "###B#C#B#D###",
+    "  #A#D#C#A#  ",
+    "  #########  ",
 ]
 
 full_input = [
-    list("#############"),
-    list("#...........#"),
-    list("###B#A#A#D###"),
-    list("  #D#C#B#C#  "),
-    list("  #########  "),
+    "#############",
+    "#...........#",
+    "###B#A#A#D###",
+    "  #D#C#B#C#  ",
+    "  #########  ",
 ]
 
-## Reduce to:
-# □□-□-□-□-□□
-#   □ □ □ □
-#   □ □ □ □
-
-ROOM_COORDS = { "A": 3, "B": 5, "C": 7, "D": 9 }
 STEP_COSTS = { "A": 1, "B": 10, "C": 100, "D": 1000 }
 
-Map = List[List[str]]
-Coord = Tuple[int, int]
-
-# Part 1
 Coord = Literal["H0","H1","H2","H3","H4","H5","H6","A0","B0","C0","D0","A1","B1","C1","D1"]
 BugType = Literal["A","B","C","D"]
 class CoordInfo(TypedDict):
@@ -37,7 +27,7 @@ class CoordInfo(TypedDict):
     adj: Set[Tuple[Coord, int]]
 Map = Dict[Coord, CoordInfo]
 
-
+# Part 1
 def is_at_home(coord: Coord, map: Map, bug_type: BugType) -> bool:
     return (
         (coord == bug_type + '1') or
@@ -59,11 +49,18 @@ def get_print_layout(map: Map) -> str:
         f("A1") + " " + f("B1") + " " + f("C1") + " " + f("D1") + "\n==========="
     )
 
-def make_move(map: Map, memo: Dict[str, int]) -> int:
-    if (layout := get_current_layout(map)) in memo:
-        return memo[layout]
+def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
+    if (layout := get_current_layout(map)) in min_energy_memo:
+        return min_energy_memo[layout]
+    if (
+        (map["H3"]["curr"] == "A" and map["H2"]["curr"] in ("C", "D")) or
+        (map["H3"]["curr"] == "D" and map["H4"]["curr"] in ("A", "B")) or
+        (map["H2"]["curr"] == "D" and map["H4"]["curr"] == "A")
+    ):
+        min_energy_memo[layout] = float("inf")
+        return float("inf")
 
-    bug_locations = [coord for coord in map if map[coord]["curr"] is not None]
+    bug_locations: List[Coord] = [coord for coord in map if map[coord]["curr"] is not None]
     active_bug_locations = list(filter(partial(is_active, map=map), bug_locations))
 
     routes: List[Tuple[Coord, Coord, int]] = []
@@ -82,8 +79,8 @@ def make_move(map: Map, memo: Dict[str, int]) -> int:
             if is_at_home(curr_coord, map, bug_type):
                 new_map = copy.deepcopy(map)
                 new_map[curr_coord]["curr"], new_map[coord]["curr"] = new_map[coord]["curr"], None
-                memo[layout] = (total_energy_cost := energy_costs[curr_coord] + make_move(new_map, memo))
-                return total_energy_cost
+                min_energy_memo[layout] = energy_costs[curr_coord] + get_min_energy(new_map, min_energy_memo)
+                return min_energy_memo[layout]
             adj_points = [
                 (x, y) for x, y in map[curr_coord]["adj"]
                 if x not in energy_costs and map[x]["curr"] is None and x[0][0] in {"H", bug_type}
@@ -96,19 +93,18 @@ def make_move(map: Map, memo: Dict[str, int]) -> int:
             if end_coord[0] == "H" and coord[0] != "H"
         ]
 
-    min_energy = float("inf")
+    min_energy_memo[layout] = float("inf")
     for start_coord, end_coord, move_energy_cost in routes:
         new_map = copy.deepcopy(map)
         new_map[end_coord]["curr"], new_map[start_coord]["curr"] = new_map[start_coord]["curr"], None
-        total_energy_cost = move_energy_cost + make_move(new_map, memo)
-        min_energy = min(min_energy, total_energy_cost)
-    memo[layout] = min_energy
-    return min_energy
+        total_energy_cost = move_energy_cost + get_min_energy(new_map, min_energy_memo)
+        min_energy_memo[layout] = min(min_energy_memo[layout], total_energy_cost)
+    return min_energy_memo[layout]
 
 def get_current_layout(map: Map) -> str:
     return '_'.join([k + str(v["curr"]) for k,v in sorted(map.items())])
 
-def get_min_energy(inpt: List[List[str]]) -> int:
+def get_min_energy_init(inpt: List[str]) -> int:
     start_map: Map = {
         "H0": {"curr": None,        "adj": {("H1", 1)}},
         "H1": {"curr": None,        "adj": {("H0", 1), ("H2", 2), ("A0", 2)}},
@@ -128,7 +124,7 @@ def get_min_energy(inpt: List[List[str]]) -> int:
     }
     finished_layout = 'A0A_A1A_B0B_B1B_C0C_C1C_D0D_D1D_H0None_H1None_H2None_H3None_H4None_H5None_H6None'
     memo: Dict[str, int] = {finished_layout: 0}
-    return make_move(start_map, memo=memo)
+    return get_min_energy(start_map, min_energy_memo=memo)
 
-# get_min_energy(test_input) == 12521
-print(get_min_energy(full_input)) # 15241 is wrong!
+assert get_min_energy_init(test_input) == 12521
+print(get_min_energy_init(full_input)) # 15241 is wrong!
