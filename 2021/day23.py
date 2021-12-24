@@ -18,6 +18,8 @@ full_input = [
     "  #########  ",
 ]
 
+
+# Part 1
 STEP_COSTS = { "A": 1, "B": 10, "C": 100, "D": 1000 }
 
 Coord = Literal["H0","H1","H2","H3","H4","H5","H6","A0","B0","C0","D0","A1","B1","C1","D1"]
@@ -27,7 +29,6 @@ class CoordInfo(TypedDict):
     adj: Set[Tuple[Coord, int]]
 Map = Dict[Coord, CoordInfo]
 
-# Part 1
 def is_at_home(coord: Coord, map: Map, bug_type: BugType) -> bool:
     return (
         (coord == bug_type + '1') or
@@ -35,9 +36,9 @@ def is_at_home(coord: Coord, map: Map, bug_type: BugType) -> bool:
     )
 
 def is_not_trapped(coord: Coord, map: Map) -> bool:
-    return coord[1] != "1" or map[coord[0] + '0']["curr"] is None
+    return coord[1] != "1" or coord[0] == "H" or map[coord[0] + '0']["curr"] is None
 
-def is_active(coord: Coord, map: Map) -> bool:
+def is_moveable(coord: Coord, map: Map) -> bool:
     return not is_at_home(coord, map, map[coord]["curr"]) and is_not_trapped(coord, map)
 
 def get_print_layout(map: Map) -> str:
@@ -52,28 +53,21 @@ def get_print_layout(map: Map) -> str:
 def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
     if (layout := get_current_layout(map)) in min_energy_memo:
         return min_energy_memo[layout]
-    if (
-        (map["H3"]["curr"] == "A" and map["H2"]["curr"] in ("C", "D")) or
-        (map["H3"]["curr"] == "D" and map["H4"]["curr"] in ("A", "B")) or
-        (map["H2"]["curr"] == "D" and map["H4"]["curr"] == "A")
-    ):
-        min_energy_memo[layout] = float("inf")
-        return float("inf")
 
-    bug_locations: List[Coord] = [coord for coord in map if map[coord]["curr"] is not None]
-    active_bug_locations = list(filter(partial(is_active, map=map), bug_locations))
+    min_energy_memo[layout] = float("inf")
+    bug_locations: List[Coord] = [coord for coord, data in map.items() if data["curr"] is not None]
+    moveable_bug_locations = list(filter(partial(is_moveable, map=map), bug_locations))
 
-    routes: List[Tuple[Coord, Coord, int]] = []
-    for coord in active_bug_locations:
-        energy_costs = {coord: 0}
+    for coord in moveable_bug_locations:
+        energy_costs: Dict[Coord, int] = {coord: 0}
         bug_type: BugType = map[coord]["curr"]
         curr_coord = coord
 
         if curr_coord[0] != "H" and curr_coord[1] == "1":       # Already filtered out if trapped
-            curr_coord = curr_coord[0] + '0'                    # Move from deep to shallow
+            curr_coord: Coord = curr_coord[0] + '0'                    # Move from deep to shallow
             energy_costs[curr_coord] = STEP_COSTS[bug_type]
 
-        stack = [curr_coord]
+        stack: List[Coord] = [curr_coord]       # Iterative DFS
         while stack:
             curr_coord = stack.pop()
             if is_at_home(curr_coord, map, bug_type):
@@ -81,24 +75,24 @@ def get_min_energy(map: Map, min_energy_memo: Dict[str, int]) -> int:
                 new_map[curr_coord]["curr"], new_map[coord]["curr"] = new_map[coord]["curr"], None
                 min_energy_memo[layout] = energy_costs[curr_coord] + get_min_energy(new_map, min_energy_memo)
                 return min_energy_memo[layout]
-            adj_points = [
-                (x, y) for x, y in map[curr_coord]["adj"]
-                if x not in energy_costs and map[x]["curr"] is None and x[0][0] in {"H", bug_type}
-            ]
-            for new_coord, dist in adj_points:
-                energy_costs[new_coord] = energy_costs[curr_coord] + dist * STEP_COSTS[bug_type]
-                stack.append(new_coord)
-        routes += [
-            (coord, end_coord, energy_cost) for end_coord, energy_cost in energy_costs.items()
-            if end_coord[0] == "H" and coord[0] != "H"
-        ]
+            for adj_coord, dist in map[curr_coord]["adj"]:
+                if (
+                    adj_coord in energy_costs or
+                    map[adj_coord]["curr"] is not None or
+                    adj_coord[0] not in {"H", bug_type}
+                ):
+                    continue
+                energy_costs[adj_coord] = energy_costs[curr_coord] + dist * STEP_COSTS[bug_type]
+                stack.append(adj_coord)
 
-    min_energy_memo[layout] = float("inf")
-    for start_coord, end_coord, move_energy_cost in routes:
-        new_map = copy.deepcopy(map)
-        new_map[end_coord]["curr"], new_map[start_coord]["curr"] = new_map[start_coord]["curr"], None
-        total_energy_cost = move_energy_cost + get_min_energy(new_map, min_energy_memo)
-        min_energy_memo[layout] = min(min_energy_memo[layout], total_energy_cost)
+        for end_coord, move_energy_cost in energy_costs.items():
+            if end_coord[0] != "H" or coord[0] == "H":
+                continue
+            new_map = copy.deepcopy(map)
+            new_map[end_coord]["curr"], new_map[coord]["curr"] = new_map[coord]["curr"], None
+            total_energy_cost = move_energy_cost + get_min_energy(new_map, min_energy_memo)
+            min_energy_memo[layout] = min(min_energy_memo[layout], total_energy_cost)
+
     return min_energy_memo[layout]
 
 def get_current_layout(map: Map) -> str:
@@ -127,4 +121,4 @@ def get_min_energy_init(inpt: List[str]) -> int:
     return get_min_energy(start_map, min_energy_memo=memo)
 
 assert get_min_energy_init(test_input) == 12521
-print(get_min_energy_init(full_input)) # 15241 is wrong!
+print(get_min_energy_init(full_input))
