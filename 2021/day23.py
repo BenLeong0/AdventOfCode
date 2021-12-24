@@ -131,4 +131,4 @@ def get_min_energy(inpt: List[List[str]]) -> int:
     return make_move(start_map, memo=memo)
 
 # get_min_energy(test_input) == 12521
-print(get_min_energy(full_input))
+print(get_min_energy(full_input)) # 15241 is wrong!
