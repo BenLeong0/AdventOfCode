@@ -36,20 +36,20 @@ def find_min_stationary_steps(layout: Layout) -> int:
         prev_layout, layout = layout, copy.deepcopy(layout)
         for i, j in product(range(height), range(width)):
             if layout[i][j] == ">" and layout[i][(j+1)%width] == ".":
-                layout[i][j], layout[i][(j+1)%width] = ".x", ">x"
+                layout[i][j], layout[i][(j+1)%width] = ".>", ">x"
+
         for i, j in product(range(height), range(width)):
-            if layout[i][j] == ".x":
-                layout[i][j] = "."
-        for i, j in product(range(height), range(width)):
-            if layout[i][j] == "v" and layout[(i+1)%height][j] == ".":
-                layout[i][j], layout[(i+1)%height][j] = ".x", "vx"
+            if layout[i][j] == "v" and layout[(i+1)%height][j] in (".", ".>"):
+                layout[i][j], layout[(i+1)%height][j] = ".v", "vx"
+
         for i, j in product(range(height), range(width)):
             if layout[i][j] == ">x":
                 layout[i][j] = ">"
             elif layout[i][j] == "vx":
                 layout[i][j] = "v"
-            elif layout[i][j] == ".x":
+            elif layout[i][j] in (".v", ".>"):
                 layout[i][j] = "."
+
         steps += 1
     return steps
 
