@@ -1,3 +1,5 @@
+import copy
+from functools import partial
 from itertools import product
 from typing import List, Literal, Optional, Tuple
 
@@ -24,25 +26,7 @@ test_input2 = get_input("day22_test2.in")
 full_input = get_input("day22.in")
 
 
-# Part 1
-def count_activated_cubes(toggles: List[Tuple[int, Cuboid]]) -> int:
-    reactor = [[[0] * 101 for _ in range(101)] for _ in range(101)]     # 50 +ve, 50 -ve, 1 zero
-    for state, cuboid in toggles:
-        for x, y, z in product(
-            range(max(-50, cuboid[X][MIN]), min(50, cuboid[X][MAX]) + 1),
-            range(max(-50, cuboid[Y][MIN]), min(50, cuboid[Y][MAX]) + 1),
-            range(max(-50, cuboid[Z][MIN]), min(50, cuboid[Z][MAX]) + 1)
-        ):
-            reactor[x+50][y+50][z+50] = state
-
-    return sum([sum([sum(x) for x in plane]) for plane in reactor])
-
-assert count_activated_cubes(test_input1) == 590784
-assert count_activated_cubes(test_input2) == 474140
-print(count_activated_cubes(full_input))
-
-
-# Part 2
+# Shared
 def check_if_intersect(cuboid1: Cuboid, cuboid2: Cuboid) -> bool:
     return (
         max(cuboid1[X][MIN], cuboid2[X][MIN]) <= min(cuboid1[X][MAX], cuboid2[X][MAX]) and
@@ -65,7 +49,7 @@ def get_volume(cuboid: Cuboid) -> int:
         (cuboid[Z][MAX] - cuboid[Z][MIN] + 1)
     )
 
-def count_activated_cubes_limitless(toggles: List[Tuple[int, Cuboid]]) -> int:
+def count_activated_cubes(toggles: List[Tuple[int, Cuboid]]) -> int:
     seen_cuboids: List[Tuple[Literal[-1, 1], Cuboid]] = []
     for state, cuboid in toggles:
         new_cuboids = []
@@ -77,5 +61,25 @@ def count_activated_cubes_limitless(toggles: List[Tuple[int, Cuboid]]) -> int:
             seen_cuboids.append((1, cuboid))
     return sum([sign * get_volume(cuboid) for sign, cuboid in seen_cuboids])
 
-assert count_activated_cubes_limitless(test_input2) == 2758514936282235
-print(count_activated_cubes_limitless(full_input))
+
+# Part 1
+RESTRICTION = ((-50, 50), (-50, 50), (-50, 50))
+
+def count_activated_cubes_restricted(toggles: List[Tuple[int, Cuboid]]) -> int:
+    restricted_toggles = [
+        (state, get_intersection(cuboid, RESTRICTION)) for state, cuboid in
+        filter(
+            lambda x: check_if_intersect(x[1], RESTRICTION),
+            copy.deepcopy(toggles)
+        )
+    ]
+    return count_activated_cubes(restricted_toggles)
+
+assert count_activated_cubes_restricted(test_input1) == 590784
+assert count_activated_cubes_restricted(test_input2) == 474140
+print(count_activated_cubes_restricted(full_input))
+
+
+# Part 2
+assert count_activated_cubes(test_input2) == 2758514936282235
+print(count_activated_cubes(full_input))
