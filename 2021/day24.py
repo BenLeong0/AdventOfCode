@@ -1,4 +1,3 @@
-
 # Shared
 
 # region Reduction done by hand:

@@ -21,10 +21,11 @@ test_input: Layout = [
 with open("day25.in", "r", newline="\n") as readfile:
     full_input: Layout = [list(line.replace("\n","")) for line in readfile.readlines()]
 
+
 # Part 1
 def find_min_stationary_steps(layout: Layout) -> int:
-    prev_layout = None
     height, width = len(layout), len(layout[0])
+    prev_layout = None
     steps = 0
 
     while layout != prev_layout:
