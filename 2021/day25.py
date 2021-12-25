@@ -21,17 +21,12 @@ test_input: Layout = [
 with open("day25.in", "r", newline="\n") as readfile:
     full_input: Layout = [list(line.replace("\n","")) for line in readfile.readlines()]
 
-def print_layout(layout: Layout):
-    for row in layout:
-        print(''.join(row))
-    print('='*len(layout[0]))
-
-
 # Part 1
 def find_min_stationary_steps(layout: Layout) -> int:
     prev_layout = None
     height, width = len(layout), len(layout[0])
     steps = 0
+
     while layout != prev_layout:
         prev_layout, layout = layout, copy.deepcopy(layout)
         for i, j in product(range(height), range(width)):
@@ -51,6 +46,7 @@ def find_min_stationary_steps(layout: Layout) -> int:
                 layout[i][j] = "."
 
         steps += 1
+
     return steps
 
 assert find_min_stationary_steps(test_input) == 58
