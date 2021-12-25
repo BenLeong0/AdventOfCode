@@ -1,29 +1,35 @@
 from collections import defaultdict
 from itertools import product
-from typing import Dict, Literal, Tuple
+from typing import DefaultDict, List, Literal, Tuple
 
-test_input = (4, 8)
-full_input = (7, 2)
+# Types
+Position = int
+Score = int
+PlayerTurn = Literal[0, 1]
+PlayerState = Tuple[Position, Score]
+GameState = Tuple[PlayerState, PlayerState, PlayerTurn]
 
+# Inputs
+test_input: Tuple[Position, Position] = (4, 8)
+full_input: Tuple[Position, Position] = (7, 2)
 
 # Shared
-def mod(n: int) -> int:
+def mod(n: Position) -> Position:
     return ((n - 1) % 10) + 1
 
 
 # Part 1
 def get_score_turns_product(p1_start: int, p2_start: int) -> int:
-    num_dice_throws = 0
-    positions = [p1_start, p2_start]
-    scores = [0, 0]
-    curr_player = 0
-    while True:
+    num_dice_throws: int = 0
+    positions: List[Position] = [p1_start, p2_start]
+    scores: List[Score] = [0, 0]
+    curr_player: PlayerTurn = 1
+    while scores[curr_player] < 1000:
+        curr_player = 1 - curr_player
         num_dice_throws += 3
         positions[curr_player] = mod(positions[curr_player] + 3*(num_dice_throws-1))
         scores[curr_player] += positions[curr_player]
-        if scores[curr_player] >= 1000:
-            return num_dice_throws * scores[1-curr_player]
-        curr_player = 1 - curr_player
+    return num_dice_throws * scores[1-curr_player]
 
 assert get_score_turns_product(*test_input) == 739785
 print(get_score_turns_product(*full_input))
@@ -31,10 +37,9 @@ print(get_score_turns_product(*full_input))
 
 # Part 2 (dynamic programming wooo)
 def get_winning_number_of_universe(p1_start: int, p2_start: int) -> int:
-    start_position_and_score: Dict[Tuple[Tuple[int, int], Tuple[int, int], Literal[0, 1]], int] = {
+    positions_and_scores: DefaultDict[GameState, int] = defaultdict(int, {
         ((p1_start, 0), (p2_start, 0), 0): 1,
-    }
-    positions_and_scores = defaultdict(int, start_position_and_score)
+    })
     possible_moves = [sum(x) for x in product((1, 2, 3), repeat=3)]
     max_score = 21 + max(possible_moves)
 
