@@ -1,13 +1,10 @@
 import copy
 from itertools import product
-import time
 from typing import List, Literal, Optional, Set, Tuple
-
 
 Coord = Tuple[int,int,int]
 BeaconList = List[Coord]
 BeaconSet = Set[Coord]
-
 
 def get_input(filename: str) -> List[BeaconList]:
     with open(filename, "r", newline="\n") as readfile:
@@ -24,7 +21,6 @@ full_input = get_input("day19.in")
 
 
 # Shared
-
 def rotate_around_axis(coord: Coord, axis: Literal[0,1,2]) -> Coord:
     return [
         lambda x,y,z: (x,z,-y),
@@ -42,12 +38,12 @@ def get_all_orientations(beacon_list: List[Coord]) -> List[List[Coord]]:
         beacon_list = [rotate_around_axis(coord, 2) for coord in beacon_list]
 
     beacon_list = [rotate_around_axis(coord, 1) for coord in beacon_list]
-    for __ in range(4):
+    for _ in range(4):
         orientations.append(copy.deepcopy(beacon_list))
         beacon_list = [rotate_around_axis(coord, 2) for coord in beacon_list]
 
     beacon_list = [rotate_around_axis(rotate_around_axis(coord, 1), 1) for coord in beacon_list]
-    for __ in range(4):
+    for _ in range(4):
         orientations.append(copy.deepcopy(beacon_list))
         beacon_list = [rotate_around_axis(coord, 2) for coord in beacon_list]
 
@@ -83,7 +79,6 @@ def get_number_of_beacons(beacon_lists: List[BeaconList]) -> int:
     beacon_lists = copy.deepcopy(beacon_lists)
     transformed_beacon_sets = [set(beacon_lists.pop(0))]
     while beacon_lists:
-        print(len(beacon_lists), len(transformed_beacon_sets))
         for transformed_beacon_set, i in product(
             transformed_beacon_sets, range(len(beacon_lists))
         ):
@@ -96,7 +91,7 @@ def get_number_of_beacons(beacon_lists: List[BeaconList]) -> int:
     return len(set().union(*transformed_beacon_sets))
 
 assert get_number_of_beacons(test_input) == 79
-print(get_number_of_beacons(full_input))    # Takes > 10 minutes
+print(get_number_of_beacons(full_input))    # Takes > 5 minutes
 
 
 # Part 2
@@ -105,7 +100,6 @@ def get_largest_manhatten_distance(beacon_lists: List[BeaconList]) -> int:
     transformed_beacon_sets = [set(beacon_lists.pop(0))]
     scanner_locations = [(0,0,0)]
     while beacon_lists:
-        print(len(beacon_lists), len(transformed_beacon_sets))
         for i, transformed_beacon_set in product(
             range(len(beacon_lists)), transformed_beacon_sets
         ):
