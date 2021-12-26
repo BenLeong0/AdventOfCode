@@ -13,8 +13,8 @@ def get_input(filename: str) -> Tuple[List[Pixel], List[List[Pixel]]]:
             [['1' if x == "#" else '0' for x in row] for row in file[1].split('\n')]
         )
 
-test_algorithm, test_image = get_input("day20_test.in")
-full_algorithm, full_image = get_input("day20.in")
+test_algorithm, test_image = get_input("input_files/day20_test.in")
+full_algorithm, full_image = get_input("input_files/day20.in")
 
 
 # Shared

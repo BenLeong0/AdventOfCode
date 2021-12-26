@@ -1,6 +1,4 @@
 import copy
-from functools import partial
-from itertools import product
 from typing import List, Literal, Optional, Tuple
 
 Bounds = Tuple[int, int]
@@ -21,9 +19,9 @@ def get_input(filename: str) -> List[Tuple[int, Tuple[Bounds, Bounds, Bounds]]]:
             ) for row in file
         ]
 
-test_input1 = get_input("day22_test1.in")
-test_input2 = get_input("day22_test2.in")
-full_input = get_input("day22.in")
+test_input1 = get_input("input_files/day22_test1.in")
+test_input2 = get_input("input_files/day22_test2.in")
+full_input = get_input("input_files/day22.in")
 
 
 # Shared
