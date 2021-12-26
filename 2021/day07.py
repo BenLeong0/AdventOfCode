@@ -3,7 +3,7 @@ from typing import List
 
 test_input: List[int] = [16,1,2,0,4,2,7,1,2,14]
 
-with open("day7.in", "r", newline="\n") as readfile:
+with open("input_files/day07.in", "r", newline="\n") as readfile:
     full_input = [int(x) for x in readfile.readline()[:-1].split(',')]
 
 

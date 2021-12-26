@@ -24,10 +24,10 @@ euler_test_input = [
     [805,732,524,37,331]
 ]
 
-with open("day15.in", "r", newline="\n") as readfile:
+with open("input_files/day15.in", "r", newline="\n") as readfile:
     full_input = [[int(x) for x in line[:-1]] for line in readfile.readlines()]
 
-with open("day15euler.in", "r", newline="\n") as readfile:
+with open("input_files/day15euler.in", "r", newline="\n") as readfile:
     euler_full_input = [[int(x) for x in line.split(",")] for line in readfile.readlines()]
 
 

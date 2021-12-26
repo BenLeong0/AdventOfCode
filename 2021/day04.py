@@ -28,7 +28,7 @@ test_boards = [
 
 test_input = [7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1]
 
-with open("day4.in", "r", newline="\n") as readfile:
+with open("input_files/day04.in", "r", newline="\n") as readfile:
     file = readfile.read().replace('\r\n', '\n').split('\n\n')
     full_input = [int(x) for x in file[0].split(',')]
     full_boards = [
