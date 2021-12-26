@@ -3,7 +3,7 @@ name: Run all files
 on: [push]
 
 jobs:
-  2021:
+  _2021:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
