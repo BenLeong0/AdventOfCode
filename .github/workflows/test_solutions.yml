@@ -14,4 +14,4 @@ jobs:
     - name: Run files
       run: |
         cd 2021
-        ls | grep -P "day\d\d\.py" | xargs -l sh -c 'echo - Running $0:; python3 $0; echo Success!; echo
+        ls | grep -P "day\d\d\.py" | xargs -l sh -c 'echo - Running $0:; python3 $0; echo Success!; echo'
