@@ -3,7 +3,7 @@ from typing import Tuple
 
 test_input: str = "D2FE28"
 
-with open("day16.in", "r", newline="\n") as readfile:
+with open("input_files/day16.in", "r", newline="\n") as readfile:
     full_input = readfile.read().splitlines()[0]
 
 

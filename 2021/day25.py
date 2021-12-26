@@ -18,7 +18,7 @@ test_input: Layout = [
     [".",".",".",".","v",".",".","v",".",">"],
 ]
 
-with open("day25.in", "r", newline="\n") as readfile:
+with open("input_files/day25.in", "r", newline="\n") as readfile:
     full_input: Layout = [list(line.replace("\n","")) for line in readfile.readlines()]
 
 

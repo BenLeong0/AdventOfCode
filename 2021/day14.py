@@ -23,7 +23,7 @@ test_rules: Dict[str, str] = {
     "CN": "C",
 }
 
-with open("day14.in", "r", newline="\n") as readfile:
+with open("input_files/day14.in", "r", newline="\n") as readfile:
     file = readfile.read().replace('\r\n', '\n').split('\n\n')
     full_template = file[0].strip()
     full_rules = {x.split(" -> ")[0]:x.split(" -> ")[1] for x in file[1].split("\n")[:-1]}
@@ -45,14 +45,14 @@ def get_polymer_difference(template: str, rules: Dict[str, str], steps: int = 10
     pairs = defaultdict(int)
     for i in range(len(template)-1):
         pairs[template[i:i+2]] += 1
-    
+
     for _ in range(steps):
         curr_pairs = defaultdict(int)
         for pair, pair_count in pairs.items():
             curr_pairs[pair[0]+rules[pair]] += pair_count
             curr_pairs[rules[pair]+pair[1]] += pair_count
         pairs = curr_pairs
-        
+
     counts = defaultdict(int, {template[0]: 0.5, template[-1]: 0.5})
     for pair, pair_count in pairs.items():
         counts[pair[0]] += pair_count / 2  # A single char will show up in two pairs, so half the count

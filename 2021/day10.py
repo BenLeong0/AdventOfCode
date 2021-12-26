@@ -15,7 +15,7 @@ test_input: List[str] = [
     r'<{([{{}}[<[[[<>{}]]]>[]]',
 ]
 
-with open("day10.in", "r", newline="\n") as readfile:
+with open("input_files/day10.in", "r", newline="\n") as readfile:
     full_input = [line[:-1] for line in readfile.readlines()]
 
 

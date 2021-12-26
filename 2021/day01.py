@@ -3,7 +3,7 @@ from typing import List
 
 test_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
 
-with open("day1.in", "r") as readfile:
+with open("input_files/day01.in", "r") as readfile:
     full_input = [int(x) for x in readfile.readlines()]
 
 
