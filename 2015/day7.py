@@ -34,6 +34,7 @@ def get_signal(wire: Wire) -> int:
         }[instruction[0]](instruction[1])
     return cache[wire]
 
+
 # Part 1
 print(get_signal("a"))
 
