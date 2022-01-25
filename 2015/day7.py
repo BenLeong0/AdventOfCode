@@ -4,9 +4,9 @@ from typing import Dict, Literal, Tuple, Union
 Operation = Literal["AND", "OR", "LSHIFT", "RSHIFT", "NOT", "IS"]
 Instruction = Tuple[Operation, Union[str, Tuple[str]]]
 
-with open("day7.in", "r") as readfile:
+with open("day7.in", "r", newline="") as readfile:
     dependency_dict: Dict[str, Instruction] = {}
-    for instruction in [x[:-1].split() for x in readfile.readlines()]:
+    for instruction in [x.split() for x in readfile.readlines()]:
         if instruction[0] == "NOT":
             dependency_dict[instruction[-1]] = ("NOT", instruction[1])
         elif instruction[1] in ("AND", "OR", "LSHIFT", "RSHIFT"):

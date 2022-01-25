@@ -1,5 +1,5 @@
-with open("day3.in", "r") as f:
-    full_instructions = f.readline()[:-1]
+with open("day3.in", "r", newline="") as f:
+    full_instructions = f.readline()
 
 
 # Part 1

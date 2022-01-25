@@ -9,8 +9,8 @@ test_input = [
 ]
 
 
-with open("day8.in", "r") as readfile:
-    full_input = [x[:-1] for x in readfile.readlines()]
+with open("day8.in", "r", newline="") as readfile:
+    full_input = list(readfile.readlines())
 
 
 # Part 1

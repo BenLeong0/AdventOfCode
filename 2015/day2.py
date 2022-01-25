@@ -7,8 +7,8 @@ Lengths = Tuple[int, int, int]
 
 test_lengths: List[Lengths] = [(2,3,4), (1,1,10)]
 
-with open("day2.in", "r") as readfile:
-    full_input = [x[:-1] for x in readfile.readlines()]
+with open("day2.in", "r", newline="") as readfile:
+    full_input = list(readfile.readlines())
     full_lengths = [tuple(map(int, x.split("x"))) for x in full_input]
 
 

@@ -2,8 +2,8 @@ import re
 from typing import List
 
 
-with open("day5.in", "r") as readfile:
-    full_input = [x[:-1] for x in readfile.readlines()]
+with open("day5.in", "r", newline="") as readfile:
+    full_input = list(readfile.readlines())
 
 
 # Part 1
