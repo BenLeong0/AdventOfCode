@@ -2,10 +2,11 @@ from typing import Dict, Literal, Tuple, Union
 
 
 Operation = Literal["AND", "OR", "LSHIFT", "RSHIFT", "NOT", "IS"]
-Instruction = Tuple[Operation, Union[str, Tuple[str]]]
+Wire = str
+Instruction = Tuple[Operation, Union[Wire, Tuple[Wire, Wire]]]
 
 with open("day7.in", "r", newline="") as readfile:
-    dependency_dict: Dict[str, Instruction] = {}
+    dependency_dict: Dict[Wire, Instruction] = {}
     for instruction in [x.split() for x in readfile.readlines()]:
         if instruction[0] == "NOT":
             dependency_dict[instruction[-1]] = ("NOT", instruction[1])
@@ -17,13 +18,13 @@ with open("day7.in", "r", newline="") as readfile:
 
 # Shared
 
-cache = {}
-def get_signal(gate: str) -> int:
-    if gate.isdigit():
-        return int(gate)
-    instruction = dependency_dict[gate]
-    if gate not in cache:
-        cache[gate] = {
+cache: Dict[Wire, int] = {}
+def get_signal(wire: Wire) -> int:
+    if wire.isdigit():
+        return int(wire)
+    instruction = dependency_dict[wire]
+    if wire not in cache:
+        cache[wire] = {
             "IS"     : lambda x: get_signal(x),
             "NOT"    : lambda x: 65535 - get_signal(x),
             "AND"    : lambda x: get_signal(x[0]) & get_signal(x[1]),
@@ -31,7 +32,7 @@ def get_signal(gate: str) -> int:
             "LSHIFT" : lambda x: get_signal(x[0]) << get_signal(x[1]),
             "RSHIFT" : lambda x: get_signal(x[0]) >> get_signal(x[1]),
         }[instruction[0]](instruction[1])
-    return cache[gate]
+    return cache[wire]
 
 # Part 1
 print(get_signal("a"))
