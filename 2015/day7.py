@@ -26,10 +26,10 @@ def get_signal(gate: str) -> int:
         cache[gate] = {
             "IS"     : lambda x: get_signal(x),
             "NOT"    : lambda x: 65535 - get_signal(x),
-            "AND"    : lambda x: get_signal(x[0]) & get_signal(instruction[1][1]),
-            "OR"     : lambda x: get_signal(x[0]) | get_signal(instruction[1][1]),
-            "LSHIFT" : lambda x: get_signal(x[0]) << get_signal(instruction[1][1]),
-            "RSHIFT" : lambda x: get_signal(x[0]) >> get_signal(instruction[1][1]),
+            "AND"    : lambda x: get_signal(x[0]) & get_signal(x[1]),
+            "OR"     : lambda x: get_signal(x[0]) | get_signal(x[1]),
+            "LSHIFT" : lambda x: get_signal(x[0]) << get_signal(x[1]),
+            "RSHIFT" : lambda x: get_signal(x[0]) >> get_signal(x[1]),
         }[instruction[0]](instruction[1])
     return cache[gate]
 
