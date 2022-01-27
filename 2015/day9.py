@@ -45,7 +45,8 @@ def find_shortest_route_recursive(routes: List[Route]) -> int:
 assert find_shortest_route_recursive(test_routes) == 605
 print(find_shortest_route_recursive(full_routes))
 
-# Part 1
+
+# Part 2
 
 def find_longest_route_recursive(routes: List[Route]) -> int:
     adj_dict = build_adj_dict(routes)
