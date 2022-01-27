@@ -26,6 +26,7 @@ def build_adj_dict(routes: List[Route]) -> dict[Location, dict[Location, int]]:
     adj_dict["Start"] = {location:0 for location in adj_dict}
     return dict(adj_dict)
 
+
 # Part 1
 
 def find_shortest_route_recursive(routes: List[Route]) -> int:
