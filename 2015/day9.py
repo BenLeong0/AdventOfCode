@@ -56,13 +56,13 @@ def find_longest_route_recursive(routes: List[Route]) -> int:
     seen = set()
     def dfs(location: Location) -> int:
         seen.add(location)
-        min_dist = max([
+        max_dist = max([
             adj_dict[location][destination] + dfs(destination)
             for destination in adj_dict[location]
             if destination not in seen
         ], default=0)
         seen.remove(location)
-        return min_dist
+        return max_dist
     return dfs("Start")
 
 assert find_longest_route_recursive(test_routes) == 982
