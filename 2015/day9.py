@@ -4,6 +4,7 @@ from typing import DefaultDict, List, Tuple
 Location = str
 Route = Tuple[Location, Location, int]
 
+
 test_routes: List[Route] = [
     ("London", "Dublin", 464),
     ("London", "Belfast", 518),
@@ -15,6 +16,7 @@ with open("day9.in", "r", newline="") as readfile:
         (route[0], route[2], int(route[4]))
         for route in [x.split() for x in readfile.readlines()]
     ]
+
 
 # Shared
 
