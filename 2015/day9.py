@@ -51,8 +51,6 @@ def find_longest_route_recursive(routes: List[Route]) -> int:
     adj_dict = build_adj_dict(routes)
     seen = set()
     def dfs(location: Location) -> int:
-        if len(seen) == len(adj_dict):
-            return 0
         seen.add(location)
         min_dist = max([
             adj_dict[location][destination] + dfs(destination)
