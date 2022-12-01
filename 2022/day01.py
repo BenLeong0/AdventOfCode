@@ -13,7 +13,7 @@ from utils import file_to_list
 
 
 def part2optimal(filename: str) -> int:
-    """booo O(n) solution (also BORING)"""
+    """boooo; O(n) solution (but BORING)"""
     top_three = []
     curr_sum = 0
     rows = file_to_list(filename)
@@ -29,4 +29,3 @@ def part2optimal(filename: str) -> int:
 
 
 print(part2optimal(INPUT_FILE))
-            
