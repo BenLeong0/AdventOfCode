@@ -1,8 +1,9 @@
 import copy
-from typing import Optional, Tuple, Union
+from typing import Iterable, List, Optional, Tuple, Union
 
+SnailfishNumber = List[Union[int, Iterable['SnailfishNumber']]]
 
-test_input = [
+test_input: List[SnailfishNumber] = [
     [[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]],
     [[[5,[2,8]],4],[5,[[9,9],0]]],
     [6,[[[6,2],[5,6]],[[7,6],[4,7]]]],
