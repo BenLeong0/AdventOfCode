@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, List, Tuple
+from typing import DefaultDict, Dict, List, Tuple
 
 Location = str
 Route = Tuple[Location, Location, int]
@@ -11,7 +11,7 @@ test_routes: List[Route] = [
     ("Dublin", "Belfast", 141),
 ]
 
-with open("day9.in", "r", newline="") as readfile:
+with open('inputs/day09.in', newline="") as readfile:
     full_routes: List[Route] = [
         (route[0], route[2], int(route[4]))
         for route in [x.split() for x in readfile.readlines()]
@@ -20,8 +20,8 @@ with open("day9.in", "r", newline="") as readfile:
 
 # Shared
 
-def build_adj_dict(routes: List[Route]) -> dict[Location, dict[Location, int]]:
-    adj_dict: DefaultDict[Location, dict[Location, int]] = defaultdict(lambda : {})
+def build_adj_dict(routes: List[Route]) -> Dict[Location, Dict[Location, int]]:
+    adj_dict: DefaultDict[Location, Dict[Location, int]] = defaultdict(dict)
     for route in routes:
         adj_dict[route[0]][route[1]] = route[2]
         adj_dict[route[1]][route[0]] = route[2]

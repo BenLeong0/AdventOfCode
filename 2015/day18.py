@@ -1,12 +1,12 @@
 from copy import deepcopy
 from itertools import product
-from typing import Literal
+from typing import List, Literal, Tuple
 
 
 Light = Literal["#", "."]
 
 
-test_input: list[list[Light]] = [
+test_input: List[List[Light]] = [
     [char for char in ".#.#.#"],
     [char for char in "...##."],
     [char for char in "#....#"],
@@ -16,11 +16,11 @@ test_input: list[list[Light]] = [
 ]
 
 with open('inputs/day18.in', "r", newline="") as readfile:
-    full_input: list[list[Light]] = [[char for char in row[:-1]] for row in readfile.readlines()]
+    full_input: List[List[Light]] = [[char for char in row[:-1]] for row in readfile.readlines()]
 
 # Shared
 
-def num_lit_neighbours(grid: list[list[Light]], pos: tuple[int, int]) -> list[tuple[int, int]]:
+def num_lit_neighbours(grid: List[List[Light]], pos: Tuple[int, int]) -> List[Tuple[int, int]]:
     return sum([
         grid[pos[0] + x][pos[1] + y] == "#" for x, y in product((-1,0,1), repeat=2)
         if abs(x)+abs(y)!=0 and 0<=pos[0]+x<len(grid) and 0<=pos[1]+y<len(grid[0])
@@ -29,7 +29,7 @@ def num_lit_neighbours(grid: list[list[Light]], pos: tuple[int, int]) -> list[tu
 
 # Part 1
 
-def get_number_of_lit_lights(initial_grid: list[list[Light]], steps: int) -> int:
+def get_number_of_lit_lights(initial_grid: List[List[Light]], steps: int) -> int:
     curr_grid = deepcopy(initial_grid)
     for _ in range(steps):
         curr_grid = [
@@ -49,7 +49,7 @@ print(get_number_of_lit_lights(full_input, 100))
 
 # Part 2
 
-def get_number_of_lit_lights_broken(initial_grid: list[list[Light]], steps: int) -> int:
+def get_number_of_lit_lights_broken(initial_grid: List[List[Light]], steps: int) -> int:
     curr_grid = deepcopy(initial_grid)
     for (i, j) in product((-1, 0), repeat=2):
         curr_grid[i][j] = "#"

@@ -1,8 +1,8 @@
 from collections import defaultdict
-from typing import DefaultDict, List, Set, Tuple
+from typing import DefaultDict, Dict, List, Set, Tuple
 
 Name = str
-HappinessMatrix = dict[Name, dict[Name, str]]
+HappinessMatrix = Dict[Name, Dict[Name, str]]
 
 
 def get_happiness_matrix(filename: str) -> HappinessMatrix:
@@ -17,10 +17,10 @@ def get_happiness_matrix(filename: str) -> HappinessMatrix:
                happiness_matrix[sorted(statement[0])[1]][sorted(statement[0])[0]] += statement[1]
           return {k:dict(v) for k,v in happiness_matrix.items()}
 
-test_matrix = get_happiness_matrix("day13_test.in")
-full_matrix = get_happiness_matrix("day13.in")
+test_matrix = get_happiness_matrix("inputs/day13_test.in")
+full_matrix = get_happiness_matrix("inputs/day13.in")
 
-full_matrix_with_self = {k:v|{"self":0} for (k,v) in full_matrix.items()}
+full_matrix_with_self = {k:{**v, "self":0} for (k,v) in full_matrix.items()}
 full_matrix_with_self['self'] = {k:0 for k in full_matrix_with_self.keys()}
 
 

@@ -2,7 +2,7 @@ import re
 from typing import List
 
 
-with open("day5.in", "r", newline="") as readfile:
+with open('inputs/day05.in', newline="") as readfile:
     full_input = list(readfile.readlines())
 
 

@@ -1,5 +1,7 @@
 import json
 import re
+from typing import Dict, Union
+
 
 with open('inputs/day12.in', "r", newline="") as f:
     full_json = f.readline()
@@ -15,7 +17,7 @@ def get_total_sum(json_string: str) -> int:
 
 def get_non_red_total_sum(json_string: str) -> int:
     accounts = json.loads(json_string)
-    def get_recursive_sum(obj: int | list | dict[str, str | int | list | dict]) -> int:
+    def get_recursive_sum(obj: Union[int, list, Dict[str, Union[str, int, list, dict]]]) -> int:
         if isinstance(obj, int):
             return obj
         if isinstance(obj, list):

@@ -1,4 +1,4 @@
-with open("day1.in", "r", newline="") as f:
+with open('inputs/day01.in', newline="") as f:
     full_instructions = f.readline()
 
 

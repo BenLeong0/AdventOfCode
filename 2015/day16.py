@@ -1,4 +1,4 @@
-from typing import Callable, TypedDict
+from typing import Callable, List, TypedDict
 
 
 class Aunt(TypedDict, total=False):
@@ -15,7 +15,7 @@ class Aunt(TypedDict, total=False):
 
 
 with open('inputs/day16.in', "r", newline="") as readfile:
-    full_aunt_list: list[Aunt] = {
+    full_aunt_list: List[Aunt] = {
         int(aunt[1][:-1]): {
             aunt[2][:-1]: int(aunt[3][:-1]),
             aunt[4][:-1]: int(aunt[5][:-1]),
@@ -40,7 +40,7 @@ expected_values: Aunt = {
 
 # Part 1
 
-def get_true_aunt(aunt_list: list[Aunt]):
+def get_true_aunt(aunt_list: List[Aunt]):
     for aunt_number, aunt_info in aunt_list.items():
         if all([aunt_info[k] == expected_values[k] for k in aunt_info]):
             return aunt_number
@@ -50,7 +50,7 @@ print(get_true_aunt(full_aunt_list))
 
 # Part 2
 
-def get_true_aunt(aunt_list: list[Aunt]):
+def get_true_aunt(aunt_list: List[Aunt]):
     checks: dict[str, Callable[[int, int], bool]] = {
         "cats": lambda x, y: x > y,
         "trees": lambda x, y: x > y,

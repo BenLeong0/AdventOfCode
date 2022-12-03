@@ -5,7 +5,7 @@ Operation = Literal["AND", "OR", "LSHIFT", "RSHIFT", "NOT", "IS"]
 Wire = str
 Instruction = Tuple[Operation, Union[Wire, Tuple[Wire, Wire]]]
 
-with open("day7.in", "r", newline="") as readfile:
+with open('inputs/day07.in', newline="") as readfile:
     dependency_dict: Dict[Wire, Instruction] = {}
     for instruction in [x.split() for x in readfile.readlines()]:
         if instruction[0] == "NOT":

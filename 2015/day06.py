@@ -6,7 +6,7 @@ Coord = Tuple[int, int]
 Instruction = Tuple[str, Coord, Coord]
 
 
-with open("day6.in", "r", newline="") as readfile:
+with open('inputs/day06.in', newline="") as readfile:
     full_input = [
         (x[0], tuple(map(int, x[1].split(","))), tuple(map(int, x[3].split(","))))
         if x[0] == "toggle" else

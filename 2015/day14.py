@@ -1,5 +1,5 @@
 from functools import partial
-from typing import TypedDict
+from typing import List, TypedDict
 
 
 class Reindeer(TypedDict):
@@ -9,14 +9,14 @@ class Reindeer(TypedDict):
     rest_time: int
 
 
-test_reindeers: list[Reindeer] = [
+test_reindeers: List[Reindeer] = [
     {"name": "Comet", "speed": 14, "active_time": 10, "rest_time": 127},
     {"name": "Dancer", "speed": 16, "active_time": 11, "rest_time": 162},
 ]
 
 
 with open('inputs/day14.in', "r", newline="") as readfile:
-    full_reindeer_list: list[Reindeer] = [
+    full_reindeer_list: List[Reindeer] = [
         {
             "name": reindeer[0],
             "speed": int(reindeer[3]),
@@ -39,7 +39,7 @@ def get_reindeer_position(reindeer: Reindeer, time: int) -> int:
 
 # Part 1
 
-def get_max_distance(reindeer_list: list[Reindeer], time_period: int = 1000) -> int:
+def get_max_distance(reindeer_list: List[Reindeer], time_period: int = 1000) -> int:
     return max([get_reindeer_position(reindeer, time_period) for reindeer in reindeer_list])
 
 assert get_max_distance(test_reindeers) == 1120
@@ -48,7 +48,7 @@ print(get_max_distance(full_reindeer_list, 2503))
 
 # Part 2
 
-def get_max_points(reindeer_list: list[Reindeer], time_period: int = 1000) -> int:
+def get_max_points(reindeer_list: List[Reindeer], time_period: int = 1000) -> int:
     points = {reindeer["name"]: 0 for reindeer in reindeer_list}
     for t in range(1, time_period+1):
         lead_pos = max(map(partial(get_reindeer_position, time=t), reindeer_list))

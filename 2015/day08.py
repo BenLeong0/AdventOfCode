@@ -9,7 +9,7 @@ test_input = [
 ]
 
 
-with open("day8.in", "r", newline="") as readfile:
+with open('inputs/day08.in', newline="") as readfile:
     full_input = list(readfile.readlines())
 
 
