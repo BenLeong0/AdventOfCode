@@ -16,8 +16,8 @@ def get_input(filename: str) -> List[BeaconList]:
             ] for coords in file[:-1]
         ]
 
-test_input = get_input("day19_test.in")
-full_input = get_input("day19.in")
+test_input = get_input("inputs/day19_test.in")
+full_input = get_input("inputs/day19.in")
 
 
 # Shared

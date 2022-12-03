@@ -16,7 +16,7 @@ test_input: List[Tuple[Tuple[int, int]]] = [
     ((5, 5), (8, 2)),
 ]
 
-with open("day5.in", "r", newline="\n") as readfile:
+with open("inputs/day05.in", "r", newline="\n") as readfile:
     full_input = [
         tuple(tuple(map(int,y.split(","))) for y in x[:-1].split(" -> "))
         for x in readfile.readlines()

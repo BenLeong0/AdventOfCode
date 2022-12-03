@@ -17,7 +17,7 @@ test_input = [
     "01010",
 ]
 
-with open("day3.in", "r", newline="\n") as readfile:
+with open("inputs/day03.in", "r", newline="\n") as readfile:
     full_input = [x[:-1] for x in readfile.readlines()]
 
 

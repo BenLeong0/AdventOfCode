@@ -14,7 +14,7 @@ test_input: List[int] = [
     'gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce',
 ]
 
-with open("day8.in", "r", newline="\n") as readfile:
+with open("inputs/day08.in", "r", newline="\n") as readfile:
     full_input = [x[:-1] for x in readfile.readlines()]
 
 

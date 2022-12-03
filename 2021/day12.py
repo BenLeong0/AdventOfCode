@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, Tuple
 
-from day12_input import *
+from inputs.day12_input import *
 
 
 # Shared

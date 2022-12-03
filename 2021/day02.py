@@ -10,7 +10,7 @@ test_input = [
     ("forward", 2),
 ]
 
-with open("day2.in", "r") as readfile:
+with open("inputs/day02.in", "r") as readfile:
     raw_input = [x.split() for x in readfile.readlines()]
     full_input = [(x[0], int(x[1])) for x in raw_input]
 

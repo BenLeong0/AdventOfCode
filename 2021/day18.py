@@ -16,7 +16,7 @@ test_input: List[SnailfishNumber] = [
     [[[[5,2],5],[8,[3,7]]],[[5,[7,5]],[4,4]]],
 ]
 
-with open("day18.in", "r", newline="\n") as readfile:
+with open("inputs/day18.in", "r", newline="\n") as readfile:
     full_input = [eval(line[:-1]) for line in readfile.readlines()]
 
 

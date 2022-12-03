@@ -9,7 +9,7 @@ test_input: List[int] = [
     [9, 8, 9, 9, 9, 6, 5, 6, 7, 8],
 ]
 
-with open("day9.in", "r", newline="\n") as readfile:
+with open("inputs/day09.in", "r", newline="\n") as readfile:
     full_input = [[int(x) for x in line[:-1]] for line in readfile.readlines()]
 
 

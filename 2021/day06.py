@@ -4,7 +4,7 @@ from typing import List
 
 test_input: List[int] = [3,4,3,1,2]
 
-with open("day6.in", "r", newline="\n") as readfile:
+with open("inputs/day06.in", "r", newline="\n") as readfile:
     full_input = [int(x) for x in readfile.readline()[:-1].split(',')]
 
 
