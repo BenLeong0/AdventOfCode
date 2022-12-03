@@ -1,6 +1,6 @@
 instructions = []
 
-with open('day12.in', 'r') as f:
+with open('inputs/day12.in', 'r') as f:
     while True:
         line = f.readline()
         if not line:

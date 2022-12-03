@@ -15,7 +15,7 @@ test_input: list[list[Light]] = [
     [char for char in "####.."],
 ]
 
-with open("day18.in", "r", newline="") as readfile:
+with open('inputs/day18.in', "r", newline="") as readfile:
     full_input: list[list[Light]] = [[char for char in row[:-1]] for row in readfile.readlines()]
 
 # Shared

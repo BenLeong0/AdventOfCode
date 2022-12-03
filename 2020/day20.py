@@ -1,6 +1,6 @@
 from math import sqrt
 
-with open('day20.in') as f:
+with open('inputs/day20.in') as f:
     idLine = True
     tiles = {}
     fullTiles = {}

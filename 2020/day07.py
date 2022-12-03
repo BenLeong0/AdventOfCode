@@ -1,5 +1,5 @@
 def partOne():
-    with open('day07.in', 'r') as f:
+    with open('inputs/day07.in', 'r') as f:
         parents = {}
         while True:
             line = f.readline()
@@ -38,7 +38,7 @@ def partOne():
 
 
 def partTwo():
-    with open('day07.in', 'r') as f:
+    with open('inputs/day07.in', 'r') as f:
         parents = {}
         while True:
             line = f.readline()

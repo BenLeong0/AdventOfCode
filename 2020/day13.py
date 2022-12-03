@@ -2,7 +2,7 @@ from math import inf
 
 instructions = []
 
-with open('day13.in', 'r') as f:
+with open('inputs/day13.in', 'r') as f:
     startTime = int(f.readline())
     timeList = f.readline()
     if timeList[-1] == '\n':

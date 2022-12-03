@@ -1,7 +1,7 @@
 import json
 import re
 
-with open("day12.in", "r", newline="") as f:
+with open('inputs/day12.in', "r", newline="") as f:
     full_json = f.readline()
 
 

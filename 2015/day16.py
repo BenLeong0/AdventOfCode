@@ -14,7 +14,7 @@ class Aunt(TypedDict, total=False):
     perfumes: int
 
 
-with open("day16.in", "r", newline="") as readfile:
+with open('inputs/day16.in', "r", newline="") as readfile:
     full_aunt_list: list[Aunt] = {
         int(aunt[1][:-1]): {
             aunt[2][:-1]: int(aunt[3][:-1]),

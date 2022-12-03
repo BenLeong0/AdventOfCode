@@ -15,7 +15,7 @@ test_reindeers: list[Reindeer] = [
 ]
 
 
-with open("day14.in", "r", newline="") as readfile:
+with open('inputs/day14.in', "r", newline="") as readfile:
     full_reindeer_list: list[Reindeer] = [
         {
             "name": reindeer[0],

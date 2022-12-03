@@ -2,7 +2,7 @@ cubes1 = {}
 cubes2 = {}
 cycleLimit = 6
 
-with open("day17.in", 'r') as f:
+with open('inputs/day17.in', 'r') as f:
 	i = 0
 	line = f.readline()
 	size = len(line) - 1

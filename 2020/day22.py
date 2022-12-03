@@ -1,4 +1,4 @@
-with open('day22.in') as f:
+with open('inputs/day22.in') as f:
     line = f.readline()
     line = f.readline()
     p1 = []

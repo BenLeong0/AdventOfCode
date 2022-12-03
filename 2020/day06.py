@@ -4,7 +4,7 @@ count = 0
 
 
 ## PART 1
-# with open('day06.in', 'r') as f:
+# with open('inputs/day06.in', 'r') as f:
 #     group = set()
 #     while True:
 #         line = f.readline()
@@ -20,7 +20,7 @@ count = 0
 #             group = group.union({i for i in line})
 
 
-with open('day06.in', 'r') as f:
+with open('inputs/day06.in', 'r') as f:
     group = {i for i in ascii_lowercase}
     while True:
         line = f.readline()

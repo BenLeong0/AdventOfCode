@@ -2,7 +2,7 @@ from math import inf
 
 seats = []
 
-with open('day05.in', 'r') as f:
+with open('inputs/day05.in', 'r') as f:
     while True:
         line = f.readline()
         if not line:

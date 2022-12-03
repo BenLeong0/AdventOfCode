@@ -1,6 +1,6 @@
 values = []
 
-with open('day10.in', 'r') as f:
+with open('inputs/day10.in', 'r') as f:
     while True:
         line = f.readline()
         if not line:

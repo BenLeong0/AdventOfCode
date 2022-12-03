@@ -2,7 +2,7 @@ values = []
 sums = []
 n = 25
 
-with open('day09.in', 'r') as f:
+with open('inputs/day09.in', 'r') as f:
     line = f.readline()
     while line:
         line = line[:-1]

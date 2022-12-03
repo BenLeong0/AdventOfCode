@@ -3,7 +3,7 @@ def f(part=1):
     foods = []      # [({ingredients}, {allergens}), ...]
     a = set()       # {allergens}
     bad = []        # [(code, allergen), ...]
-    with open('day21.in') as f:
+    with open('inputs/day21.in') as f:
         line = f.readline()
         while line:
             line = line[:-2]

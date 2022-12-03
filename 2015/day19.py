@@ -13,7 +13,7 @@ test_replacements: List[Replacement] = [
 ]
 
 
-with open("day19.in", "r", newline="") as readfile:
+with open('inputs/day19.in', "r", newline="") as readfile:
     full_input: List[str] = [row for row in readfile.readlines()]
     full_replacements = [(x[0], x[2]) for x in [y.split() for y in full_input[:-2]]]
     full_start_mol = full_input[-1]

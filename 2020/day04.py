@@ -1,6 +1,6 @@
 passports = []
 
-with open('day04.in', 'r') as f:
+with open('inputs/day04.in', 'r') as f:
     current_passport = {}
     while True:
         line = f.readline()

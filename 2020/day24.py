@@ -1,7 +1,7 @@
 a = 'sesenwnenenewseeswwswswwnenewsewsw'
 arr = []
 
-with open('day24.in') as f:
+with open('inputs/day24.in') as f:
     line = f.readline()
     while line:
         line = line[:-1]

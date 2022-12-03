@@ -42,7 +42,7 @@ def evalParsed(line):
 
 def partOne(part=1):
     result = 0
-    with open('day18.in', 'r') as f:
+    with open('inputs/day18.in', 'r') as f:
         line = f.readline()
         while line:
             result += evalParsed(parseLine(line[:-1],part=part))
