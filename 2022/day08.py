@@ -1,5 +1,3 @@
-
-
 # INPUT_FILE = "inputs/day08test.in"
 INPUT_FILE = "inputs/day08.in"
 
