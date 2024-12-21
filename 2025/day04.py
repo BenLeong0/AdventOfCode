@@ -46,15 +46,11 @@ def part2(filename: str) -> int:
         if wordsearch[i][j] != "A":
             continue
         letters = [wordsearch[i + di][j + dj] for di, dj in star]
-        word1 = [letters[0], letters[3]]
-        word2 = [letters[1], letters[2]]
+        word1 = letters[0] + "A" + letters[3]
+        word2 = letters[1] + "A" + letters[2]
 
-        word1_valid = (
-            word1[0] == "M" and word1[1] == "S" or word1[0] == "S" and word1[1] == "M"
-        )
-        word2_valid = (
-            word2[0] == "M" and word2[1] == "S" or word2[0] == "S" and word2[1] == "M"
-        )
+        word1_valid = word1 in ("MAS", "SAM")
+        word2_valid = word2 in ("MAS", "SAM")
         if word1_valid and word2_valid:
             instances += 1
 
