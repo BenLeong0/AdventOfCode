@@ -20,15 +20,7 @@ def part1(filename: str) -> int:
     return sum
 
 
-part1ol = lambda filename: sum(
-    sum(
-        a
-        for a in range(int(s[0]), int(s[1]) + 1)
-        if str(a)[: len(str(a)) // 2] * 2 == str(a)
-    )
-    for y in [x for x in open(filename).readline().split(",")]
-    if (s := y.split("-"))
-)
+part1ol = lambda filename: sum(sum(a for a in range(int(s[0]),int(s[1])+1) if str(a)[:len(str(a))//2]*2==str(a)) for y in [x for x in open(filename).readline().split(",")] if (s:=y.split("-")))
 
 # print(part1(INPUT_FILE_TEST))
 # print(part1ol(INPUT_FILE_TEST))
@@ -53,16 +45,7 @@ def part2(filename: str) -> int:
     return sum
 
 
-part2ol = lambda filename: sum(
-    sum(
-        a
-        for a in range(int(s[0]), int(s[1]) + 1)
-        if (sa := str(a))
-        and any(sa[: len(sa) // div] * div == sa for div in range(2, len(sa) + 1))
-    )
-    for y in [x for x in open(filename).readline().split(",")]
-    if (s := y.split("-"))
-)
+part2ol = lambda filename: sum(sum(a for a in range(int(s[0]),int(s[1])+1) if (sa:=str(a)) and any(sa[:len(sa)//div]*div==sa for div in range(2,len(sa)+1))) for y in [x for x in open(filename).readline().split(",")] if (s:=y.split("-")))
 
 
 print(part2(INPUT_FILE_TEST))
