@@ -6,7 +6,7 @@
 
 In 2022, I tackled the problems in two ways:
 
-- Python, with solutions that could be formatted on a single line only
-- Google Sheets, which can be viewed [here](https://docs.google.com/spreadsheets/d/1A1Gg2brEQIeIbRuvaOpOqgJ3lJ19s8L64MnsKQafbJI/edit?gid=0#gid=0)
+- Python, with solutions that could be formatted on a single line only.
+- Google Sheets, which can be viewed [here](https://docs.google.com/spreadsheets/d/1A1Gg2brEQIeIbRuvaOpOqgJ3lJ19s8L64MnsKQafbJI/edit?gid=0#gid=0).
 
 In 2025, I again attempted to tackle the problems with oneline-solutions only.
