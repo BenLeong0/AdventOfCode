@@ -26,14 +26,7 @@ def part1(filename: str) -> int:
     return count
 
 
-part1ol = lambda filename: reduce(
-    lambda x, y: (x[0] + y, x[1] + int((x[0] + y) % 100 == 0)),
-    (
-        ((-1) ** "LR".index(x[0])) * int(x[1:])
-        for x in open(filename).read().split("\n")[:-1]
-    ),
-    (50, 0),
-)[1]
+part1ol = lambda filename: reduce(lambda x,y:(x[0]+y,x[1]+int((x[0]+y)%100 == 0)),(((-1)**"LR".index(x[0]))*int(x[1:]) for x in open(filename).read().split("\n")[:-1]),(50,0))[1]
 
 print(part1(INPUT_FILE_TEST))
 print(part1ol(INPUT_FILE_TEST))
@@ -62,22 +55,7 @@ def part2(filename: str) -> int:
     return count
 
 
-part2ol = lambda filename: reduce(
-    lambda x, y: (
-        x[0] + y,
-        (
-            x[1]
-            + abs((x[0] // 100) - ((x[0] + y) // 100))
-            + int(y < 0 and (x[0] + y) % 100 == 0)
-            - int(y < 0 and (x[0]) % 100 == 0)
-        ),
-    ),
-    (
-        ((-1) ** "LR".index(x[0])) * int(x[1:])
-        for x in open(filename).read().split("\n")[:-1]
-    ),
-    (50, 0),
-)[1]
+part2ol = lambda filename: reduce(lambda x,y:(x[0]+y,(x[1]+abs((x[0]//100)-((x[0]+y)//100))+int(y<0 and (x[0]+y)%100 == 0)-int(y<0 and (x[0])%100 == 0))),(((-1)**"LR".index(x[0]))*int(x[1:]) for x in open(filename).read().split("\n")[:-1]),(50,0))[1]
 
 print(part2(INPUT_FILE_TEST))
 print(part2ol(INPUT_FILE_TEST))
