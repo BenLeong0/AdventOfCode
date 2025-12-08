@@ -13,3 +13,8 @@ part1ol = lambda filename,num: reduce(lambda a,b:a*b,sorted(map(lambda s:len(s),
 
 print(part1ol(INPUT_FILE_TEST,10))
 print(part1ol(INPUT_FILE,1000))
+
+part2ol = lambda filename: ((lambda x:x[1][0][0]*x[1][1][0])(reduce(lambda prev,n:(prev if prev[1] is not None else (res,n) if len((res:=[*[s for s in prev[0] if n[0] not in s and n[1] not in s],{*sum([list(s) for s in prev[0] if n[0] in s or n[1] in s ],[]),*n}])[0]) == num else (res,None)),sorted(combinations((tuple(map(int,r.split(","))) for r in open(filename).read().split("\n")[:-1]),2) if (num:=open(filename).read().count("\n")) else [],key=lambda n:sqrt((n[0][0]-n[1][0])**2+(n[0][1]-n[1][1])**2+(n[0][2]-n[1][2])**2)),([],None))))
+
+print(part2ol(INPUT_FILE_TEST))
+print(part2ol(INPUT_FILE))
